@@ -2,10 +2,7 @@ function main
     load('forstudents/cleandata_students.mat')
     %test_split();
     %return
-    x = x(1:100, :);
-    y = y(1:100);
-    
-    for n = 1:6,
+    for n = 1:,
         targets = binary_filter(y, n);
         attributes = 1:size(x, 2);
         tree = decision_tree_learning(x, attributes, targets);
@@ -20,7 +17,7 @@ end
 
 function [ decision_tree ] = decision_tree_learning( examples, attributes, binary_targets )
     if all(binary_targets == binary_targets(1))
-       decision_tree.class = binary_targets(1);
+       decision_tree.class = 888; %binary_targets(1);
        decision_tree.kids  = [];
     elseif isempty(attributes)
         decision_tree.class = 66;%mode(binary_targets);
@@ -32,7 +29,7 @@ function [ decision_tree ] = decision_tree_learning( examples, attributes, binar
         for value = 0:1,            
             [new_examples, new_binary_targets] = split_examples_targets(examples, binary_targets, best_attribute, value);
             if (isempty(new_examples))
-                decision_tree.class = mode(binary_targets);
+                decision_tree.class = 77;%mode(binary_targets);
                 decision_tree.kids = [];
                 return
             else
