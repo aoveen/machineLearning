@@ -1,10 +1,21 @@
+function funs = trees
+  funs.main = @main;
+  funs.binary_filter = @binary_filter;
+  funs.decision_tree_learning = @decision_tree_learning;
+  funs.choose_best_decision_attribute = @choose_best_decision_attribute;
+  funs.gain = @gain;
+  funs.information = @information;
+  funs.remainder = @remainder;
+  funs.split_examples_targets = @split_examples_targets;
+end
+
 function main
     load('forstudents/cleandata_students.mat')
     %test_split();
     %return
     x = x(1:100, :);
     y = y(1:100);
-    
+
     for n = 1:6,
         targets = binary_filter(y, n);
         attributes = 1:size(x, 2);
@@ -73,7 +84,7 @@ function [remainder] = remainder(attribute, examples, binary_targets)
     remainder = ((pos0 + neg0)/total)*information(pos0, neg0) + ((pos1 + neg1)/total)*information(pos1, neg1);
 end
 
-function [ new_examples, new_binary_targets ] = split_examples_targets(examples, binary_targets, attribute, value )
+function [ new_examples, new_binary_targets ] = split_examples_targets(examples, binary_targets, attribute, value)
     attr_column = examples(:,attribute);
     rows_to_keep = attr_column == value;
     new_examples = examples;
