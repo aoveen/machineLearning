@@ -1,28 +1,86 @@
-function funs = trees
-  funs.main = @main;
-  funs.binary_filter = @binary_filter;
-  funs.decision_tree_learning = @decision_tree_learning;
-  funs.choose_best_decision_attribute = @choose_best_decision_attribute;
-  funs.gain = @gain;
-  funs.information = @information;
-  funs.remainder = @remainder;
-  funs.split_examples_targets = @split_examples_targets;
-end
+% function funs = trees
+%   funs.main = @main;
+%   funs.binary_filter = @binary_filter;
+%   funs.decision_tree_learning = @decision_tree_learning;
+%   funs.choose_best_decision_attribute = @choose_best_decision_attribute;
+%   funs.gain = @gain;
+%   funs.information = @information;
+%   funs.remainder = @remainder;
+%   funs.split_examples_targets = @split_examples_targets;
+% end
 
 function main
     load('forstudents/cleandata_students.mat')
-    %test_split();
-    %return
-    x = x(1:100, :);
-    y = y(1:100);
-
-    for n = 1:6,
-        targets = binary_filter(y, n);
-        attributes = 1:size(x, 2);
-        tree = decision_tree_learning(x, attributes, targets);
-        DrawDecisionTree(tree, 'Tree')
-        % display(n)
+    
+    ten_fold_data_x = {};
+    ten_fold_data_y = {};
+    
+    bucket_size = fix(length(x) / 10);
+    
+    for i = 0:9,
+        ten_fold_data_x{i+1} = x(i*bucket_size + 1:(i+1)*bucket_size, :);
+        ten_fold_data_y{i+1} = y(i*bucket_size + 1:(i+1)*bucket_size);
     end
+    confusion = zeros(6, 6);
+    for i = 1:10,
+        test_set_x = ten_fold_data_x{i};
+        test_set_y = ten_fold_data_y{i};
+        
+        training_data_x = []; 
+        training_data_y = [];
+        
+        for j = 1:10,
+           if (j ~= i),
+              training_data_x = vertcat(training_data_x, ten_fold_data_x{j});
+              training_data_y = vertcat(training_data_y, ten_fold_data_y{j}); 
+           end
+        end
+        trees = {};
+        for n = 1:6,
+            targets = binary_filter(training_data_y, n);
+            attributes = 1:size(training_data_x, 2);
+            tree = decision_tree_learning(training_data_x, attributes, targets);
+            trees{n} = tree;
+            %DrawDecisionTree(tree, 'Tree')
+        end
+        predictions = testTrees(trees, test_set_x);
+        confusion = confusion + confuse(test_set_y, predictions);
+        confusion
+    end
+    confusion
+end
+
+function [confusion] = confuse(actual, predictions)
+    confusion = zeros(6, 6);
+    for i = 1:length(actual),
+        confusion(actual(i), predictions(i)) = confusion(actual(i), predictions(i)) + 1;
+    end
+end
+
+function [predictions] = testTrees(ts, examples)
+    predictions = [];
+    for i = 1:length(examples),
+        example = examples(i,:);
+        labels = [];
+        for t = ts,
+           labels(end+1) = test_tree(t{1}, example); 
+        end
+       predictions(i) = choose_label(labels);  
+    end
+end
+
+function [label] = test_tree(t, example)
+    if isempty(t.kids)
+        label = t.class;
+        return
+    else
+        kid = example(t.op) + 1;
+        label = test_tree(t.kids{kid}, example);
+    end
+end
+
+function [label] = choose_label(labels)
+    [~, label] = max(labels);
 end
 
 function [ targets ] = binary_filter( labels, target_label );
@@ -34,7 +92,7 @@ function [ decision_tree ] = decision_tree_learning( examples, attributes, binar
        decision_tree.class = binary_targets(1);
        decision_tree.kids  = [];
     elseif isempty(attributes)
-        decision_tree.class = 66;%mode(binary_targets);
+        decision_tree.class = mode(binary_targets);
         decision_tree.kids = [];
     else
         best_attribute = choose_best_decision_attribute(examples, attributes, binary_targets);
