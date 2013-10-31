@@ -1,0 +1,192 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Paul Rowe-White}
+\title{Machine Learning CBC: Decision Trees}
+\begin{document}
+\maketitle
+
+\section{Implementation Summary}
+
+cross validation details
+How select best attribute in each node
+how we compute average results:
+generated confusion matrix and then calculate statistics from here
+
+\section{Diagrams of six trees}
+
+look at the pretty pictures
+
+\section{Evaluation}
+\subsection{Clean Dataset}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class}\\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 82 & 16 & 7 & 6 & 13 & 7 \\ \hline
+	2 & 19 & 148 & 4 & 9 & 11 & 7\\ \hline
+	3 & 12 & 2 & 75 & 2 & 3 & 24 \\ \hline
+	4 & 6 & 12 & 2 & 188 & 3 & 4 \\ \hline
+	5 & 14 & 18 & 6 & 4 & 81 & 9 \\ \hline
+	6 & 2 & 4 & 16 & 2 & 8 & 174\\ \hline
+\end{tabular}
+\caption{Clean Dataset magic}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Class}\\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	Recall Rate & 62.5954 & 74.7475 & 63.5593 & 87.4419 & 61.3636 & 84.4660\\ \hline
+	Precision Rate & 60.7407 & 74.0000 & 68.1818 & 89.0995 & 68.0672 & 77.3333\\ \hline
+	$F_1$ & 61.6541 & 74.3719 & 65.7895 & 88.2629 & 64.5418 & 80.7425\\ \hline
+\end{tabular}
+\caption{Clean Dataset results}
+\end{table}
+
+Error rate: 0.2520, Classification rate = 0.7480
+
+
+\subsection{Noisy Dataset}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class}\\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 30 & 13 & 18 & 7 & 12 & 8 \\ \hline
+	2 & 14 & 121 & 13 & 18 & 11 & 10\\ \hline
+	3 & 24 & 12 & 99 & 19 & 15 & 18 \\ \hline
+	4 & 6 & 9 & 15 & 161 & 7 & 10 \\ \hline
+	5 & 21 & 5 & 11 & 6 & 55 & 12 \\ \hline
+	6 & 4 & 7 & 15 & 8 & 6 & 180\\ \hline
+\end{tabular}
+\caption{Noisy Dataset magic}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Class}\\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	Recall Rate &  34.0909 & 64.7059 & 52.9412 & 77.4038 & 50.0000 & 81.8182 \\ \hline
+	Precision Rate & 30.3030 & 72.4551 & 57.8947 & 73.5160 & 51.8868 & 75.6303\\ \hline
+	$F_1$ & 32.0856 & 68.3616 & 55.3073 & 75.4098 & 50.9259 & 78.6026\\ \hline
+\end{tabular}
+\caption{Noisy Dataset magic}
+\end{table}
+
+Error rate: 0.3540, Classification rate = 0.6460
+
+\subsection{Conclusion}
+
+There is a difference in the performance when using the clean and noisy datasets. The clean set performs a lot better than the other. This is because while the clean dataset contains only consistent classifications, the noisy set also contains examples with their classifications that do not agree. Because of this, the trees that are constructed from this data classify examples incorrectly.
+
+
+\section{Emotion Ambiguity}
+
+Since six trees are constructed in the decision learning tree training phase ambiguous results can occur when multiple trees positively classify an example. 
+
+In this case we need to pick just one emotion to return to the user. In order to pick an emotion we tried a few different algorithms to combine the results from all trees:
+
+\subsection{Clean Data}
+\subsubsection{Confusion Matrix For First}
+Below is the confusion matrix for our decision trees on clean data
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class} \\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 113 & 6 & 3 & 2 & 4 & 3 \\ \hline
+	2 & 46 & 146 & 0 & 3 & 3 & 0\\ \hline
+	3 & 28 & 2 & 76 & 0 & 3 & 9 \\ \hline
+	4 & 20 & 9 & 2 & 184 & 0 & 0 \\ \hline
+	5 & 46 & 8 & 6 & 2 & 67 & 3 \\ \hline
+	6 & 32 & 2 & 9 & 2 & 8 & 153\\ \hline
+\end{tabular}
+
+\subsubsection{Confusion Matrix For Random}
+Below is the confusion matrix for our decision trees on clean data
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class} \\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 85 & 15 & 8 & 8 & 8 & 7 \\ \hline
+	2 & 13 & 154 & 4 & 11 & 12 & 4 \\ \hline
+	3 & 9 & 5 & 79 & 4 & 5 & 16 \\ \hline
+	4 & 2 & 12 & 5 & 190 & 1 & 5 \\ \hline
+	5 & 12 & 18 & 9 & 6 & 76 & 11 \\ \hline
+	6 & 9 & 7 & 11 & 5 & 14 & 160 \\ \hline
+\end{tabular}
+
+\subsection{Noisy Data}
+\subsubsection{Confusion Matrix For First}
+Below is the confusion matrix for our decision trees on noisy data
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class} \\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 57 & 8 & 11 & 5 & 4 & 3 \\ \hline
+	2 & 47 & 119 & 11 & 7 & 1 & 2 \\ \hline
+	3 & 61 & 10 & 88 & 12 & 10 & 6 \\ \hline
+	4 & 43 & 9 & 6 & 145 & 2 & 3 \\ \hline
+	5 & 57 & 3 & 6 & 2 & 40 & 2 \\ \hline
+	6 & 37 & 4 & 14 & 11 & 6 & 148 \\ \hline
+\end{tabular}
+
+\subsubsection{Confusion Matrix For Random}
+Below is the confusion matrix for our decision trees on noisy data
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	& \multicolumn{6}{ |c| }{Predicted class} \\
+	\hline
+	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	1 & 30 & 11 & 15 & 13 & 7 & 12 \\ \hline
+	2 & 10 & 117 & 21 & 14 & 11 & 14 \\ \hline
+	3 & 19 & 14 & 93 & 21 & 22 & 18 \\ \hline
+	4 & 5 & 10 & 11 & 159 & 8 & 15 \\ \hline
+	5 & 13 & 7 & 13 & 13 & 53 & 11 \\ \hline
+	6 & 4 & 11 & 15 & 14 & 9 & 167 \\ \hline
+\end{tabular}
+
+
+
+
+\subsection{Choose First Positive Classification}
+
+\subsection{Choose Random Positive Classification}
+
+\subsection{Choose Result with Shortest Classification Path}
+
+\section{Pruning}
+
+The pruning function works by magic. The curves describe the error rate over the number of examples used to train the tree. As we can see in the figures the error rate 
+
+what is the difference between the two curves
+include 2 figures
+do this for both the clean and noisy datasets
+
+\end{document}

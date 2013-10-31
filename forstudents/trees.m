@@ -1,3 +1,4 @@
+
 function funs = trees
   funs.main = @main;
   funs.binary_filter = @binary_filter;
@@ -9,9 +10,7 @@ function funs = trees
   funs.split_examples_targets = @split_examples_targets;
 end
 
-function [confusion] = main
-    load('forstudents/noisydata_students.mat')
-    
+function [confusion] = cross_fold_validation(x, y)
     ten_fold_data_x = {};
     ten_fold_data_y = {};
     
@@ -37,15 +36,18 @@ function [confusion] = main
         end
         trees = {};
         for n = 1:6,
-            targets = binary_filter(training_data_y, n);
-            attributes = 1:size(training_data_x, 2);
-            tree = decision_tree_learning(training_data_x, attributes, targets);
-            trees{n} = tree;
-            %DrawDecisionTree(tree, 'Tree')
+            trees{n} = build_tree(training_data_x, training_data_y);
         end
         predictions = testTrees(trees, test_set_x);
         confusion = confusion + confuse(test_set_y, predictions);
     end
+    confusion = confusion / 10;
+end
+
+function [tree] = build_tree(x, y)
+    targets = binary_filter(y, n);
+    attributes = 1:size(x, 2);
+    tree = decision_tree_learning(x, attributes, targets);
 end
 
 function [confusion] = confuse(actual, predictions)
@@ -64,7 +66,7 @@ function [predictions] = testTrees(ts, examples)
         for t = ts,
            [labels(end+1), depths(end+1)] = test_tree(t{1}, example); 
         end
-       predictions(i) = choose_label(labels, depths);  
+        predictions(i) = choose_label(labels, depths);  
     end
 end
 
@@ -103,7 +105,16 @@ end
 function [label] = depth_weighted_label(labels, depths)
     indices = find(labels);
     if isempty(indices)
-        label = floor(rand(1)*length(labels)) + 1;
+        max_depth = max(depths);
+        
+        correct_indices = [];
+        for i = 1:length(depths),
+           if depths(i) == max_depth
+               correct_indices(end + 1) = i;
+           end
+        end
+        
+        label = correct_indices(floor(rand(1)*length(correct_indices)) + 1);
     else
         min_depth = min(depths(labels==1));
         
@@ -114,7 +125,7 @@ function [label] = depth_weighted_label(labels, depths)
            end
         end
         
-        label = indices(floor(rand(1)*length(correct_indices)) + 1);
+        label = correct_indices(floor(rand(1)*length(correct_indices)) + 1);
     end
 end
 
@@ -184,14 +195,4 @@ function [ new_examples, new_binary_targets ] = split_examples_targets(examples,
     new_examples(~rows_to_keep, :) = [];
     new_binary_targets = binary_targets;
     new_binary_targets(~rows_to_keep, :) = [];
-end
-
-function test_split
-    examples = [0 0; 1 0; 1 0];
-    targets = [1; 0; 1];
-    attribute = 1;
-    value = 0;
-    [ex, bin] = split_examples_targets(examples, targets, attribute, value);
-    display(ex);
-    display(bin);
 end

@@ -8,7 +8,7 @@ function [recall, precision, fs, error] = stats( confusion )
         precision(i) = class_precision;
         fs(i) = class_f;
     end
-    error = (sum(confusion(:)) - trace(confusion)) / sum(confusion(:))
+    error = (sum(confusion(:)) - trace(confusion)) / sum(confusion(:));
 end
 
 function [recall, precision, f1] = calculate_recall_and_precision (confusion, class)
