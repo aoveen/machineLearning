@@ -91,9 +91,9 @@ function [label, depth] = test_tree(t, example)
 end
 
 function [label] = choose_label(labels, depths)
-    %label = first_label(labels);
+    label = first_label(labels);
     %label = random_label(labels);
-    label = depth_weighted_label(labels, depths);
+    %label = depth_weighted_label(labels, depths);
 end
 
 function [label] = first_label(labels)
