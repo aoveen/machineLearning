@@ -1,6 +1,14 @@
 
 function funs = trees
-  funs.main = @main;
+  funs.cross_fold_validation = @cross_fold_validation;
+  funs.build_tree = @build_tree;
+  funs.confuse = @confuse;
+  funs.testTrees = @testTrees;
+  funs.test_tree = @test_tree;
+  funs.choose_label = @choose_label;
+  funs.first_label = @first_label;
+  funs.random_label = @random_label;
+  funs.depth_weighted_label = @depth_weighted_label;
   funs.binary_filter = @binary_filter;
   funs.decision_tree_learning = @decision_tree_learning;
   funs.choose_best_decision_attribute = @choose_best_decision_attribute;
@@ -36,7 +44,7 @@ function [confusion] = cross_fold_validation(x, y)
         end
         trees = {};
         for n = 1:6,
-            trees{n} = build_tree(training_data_x, training_data_y);
+            trees{n} = build_tree(training_data_x, training_data_y, n);
         end
         predictions = testTrees(trees, test_set_x);
         confusion = confusion + confuse(test_set_y, predictions);
@@ -44,8 +52,8 @@ function [confusion] = cross_fold_validation(x, y)
     confusion = confusion / 10;
 end
 
-function [tree] = build_tree(x, y)
-    targets = binary_filter(y, n);
+function [tree] = build_tree(x, y, attribute)
+    targets = binary_filter(y, attribute);
     attributes = 1:size(x, 2);
     tree = decision_tree_learning(x, attributes, targets);
 end
