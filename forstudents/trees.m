@@ -177,12 +177,18 @@ end
 function [information_gain] = gain(attribute, examples, binary_targets)    
     pos = sum(binany_targets == 1);
     neg = sum(binary_targets == 0);
-    information_gain = information(pos, neg) - remainder(attribute, examples, binary_targets);    
+    information_gain = information(pos, neg) - remainder(attribute, examples, binary_targets);
 end
 
 function [i] = information(pos, neg)
     total = pos + neg;
-    i = -(pos/total)*log2(pos/total) -(neg/total)*log2(neg/total);
+    % matlab will return NaN if one of the two variables is 0 here since
+    % log2(0) = -Inf and -Inf * 0 is NaN
+    if pos == 0 || neg == 0
+        i = 0;
+    else
+        i = -(pos/total)*log2(pos/total) -(neg/total)*log2(neg/total);
+    end
 end
 
 function [remainder] = remainder(attribute, examples, binary_targets)
