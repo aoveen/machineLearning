@@ -229,6 +229,18 @@ Noisy Data & $0.3590$ & $0.6410$ \\
 
 \section{Pruning}
 
+One of the files that that are part of the provided material for this coursework contains an example pruning function which illustrates the effects of pruning a decision tree in its own example. This function works as follows:
+
+The function first builds a decision tree based on the data x and classifications y (just like our decision tree learning algorithm). The tree is then tested using two different methods and graphs are plotted that can be seen in figure \ref{fig:pruning}. The two figures each show two curves, the red one describing the training error, the blue one describing the validation error both as a function of training cycles. This means that as we increase the number of examples that are used to train the tree, the error rate changes.
+To get the two different curves the \texttt{pruning\_example} function uses two different methods:
+
+The training error refers to the error that is caused by direct clashes in the examples, i.e. examples with the same attribute values are classified differently. This error curve is computed by using the tree built with x and y to classify the examples in x and y over time, i.e. the more examples were used to build the tree the more examples are also classified correctly, simply due to the fact that they are the same examples.
+
+At the same time, the function also computes the verification error (in blue). This is done by performing 10-fold cross validation (similarly to our solution, it actually ignores the tree that is passed in and builds its own tree). 9/10ths of the data is used to build the tree while the 1/10th is used to verify the data by classifying these data in the built tree. As we can see in the diagrams, the blue curve decreases for some time, until increasing slightly again after some number of examples. 
+
+This means that although training error decreases (as explained above, this is expected) the error on unseen data (as tested in 10-fold cross validation) only decreases until a certain point until it increases again. This point, at which training error is decreasing and verification error starts to increase is the point when overfitting begins to happen. Overfitting describes the phenomenon where a decision tree is trained with too many examples and thus does not generalise well.
+
+The \texttt{treetest} function that is used in the pruning example also returns this particular point in terms of number of levels in the tree (counted from the bottom) that should be pruned in order to get the optimal tree. Another function \texttt{treeprune} actually prunes the tree which could then be used to perform classification with the optimal error rate (from the given examples).
 
 \begin{figure}[!ht]
 	\centering
@@ -242,21 +254,11 @@ Noisy Data & $0.3590$ & $0.6410$ \\
      	\caption{Pruning Function Applied to Noisy Data}
      	\label{fig:pruningNoisy}
     \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
 \end{figure}
 
-
-how does the pruning function work
-two figures for clean and noisy data
-explain the curves
-what is the difference between the curves
-what is the optimal tree size
-
-
-
-The pruning function works by magic. The curves describe the error rate over the number of examples used to train the tree. As we can see in the figures the error rate 
-
-what is the difference between the two curves
-include 2 figures
-do this for both the clean and noisy datasets
+As we can see in the graphs, the curves corresponding to clean data (figure \ref{fig:pruningClean}) drop faster than the other curves. This is caused by the lack of inconsistencies in the data which means that classification is only hindered by absence of knowledge rather than also conflicting parts of knowledge. Notice that this also has a much larger effect on the development of the verification error rate in figure \ref{fig:pruningNoisy} that corresponds to the noisy data. In noisy (and more likely real-life data) it is thus very important not to overfit the classifier.
+% rewrite this a bit?
 
 \end{document}
