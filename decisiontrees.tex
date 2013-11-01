@@ -83,6 +83,8 @@ In addition, the calculated error rate is $0.2500$, resulting in a classificatio
 
 \subsection{Noisy Dataset}
 
+Analysis of the noisy dataset results in the confusion matrix that can be seen in table \ref{tab:chooseDepthNoisyConfusion}. From this confusion matrix, the recall and precision rates can be calculated which can then be combined to a single $F_1$ measure as seen in table \ref{tab:chooseDepthNoisyStats}.
+
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
@@ -98,6 +100,7 @@ In addition, the calculated error rate is $0.2500$, resulting in a classificatio
 	& 6 & 1.1 & 0.4 & 2.0 & 0.8 & 1.1 & 16.6\\ \hline
 \end{tabular}
 \caption{Confusion Matrix of Final Algorithm Applied to Noisy Data}
+\label{tab:chooseDepthNoisyConfusion}
 \end{table}
 
 \begin{table}
@@ -115,7 +118,7 @@ In addition, the calculated error rate is $0.2500$, resulting in a classificatio
 \label{tab:chooseDepthNoisyStats}
 \end{table}
 
-Error rate: 0.3590, Classification rate = 0.6410
+In addition, the calculated error rate is $0.3590$, resulting in a classification rate of $0.6410$ (see table \ref{tab:chooseDepthRates}).
 
 \subsection{Conclusion}
 
