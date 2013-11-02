@@ -2,7 +2,6 @@
 function funs = trees
   funs.cross_fold_validation = @cross_fold_validation;
   funs.build_tree = @build_tree;
-  funs.confuse = @confuse;
   funs.testTrees = @testTrees;
   funs.test_tree = @test_tree;
   funs.choose_label = @choose_label;
@@ -47,7 +46,7 @@ function [confusion] = cross_fold_validation(x, y)
             trees{n} = build_tree(training_data_x, training_data_y, n);
         end
         predictions = testTrees(trees, test_set_x);
-        confusion = confusion + confuse(test_set_y, predictions);
+        confusion = confusion + calcConfusionMatrix(test_set_y, predictions);
     end
     confusion = confusion / 10;
 end
@@ -56,13 +55,6 @@ function [tree] = build_tree(x, y, attribute)
     targets = binary_filter(y, attribute);
     attributes = 1:size(x, 2);
     tree = decision_tree_learning(x, attributes, targets);
-end
-
-function [confusion] = confuse(actual, predictions)
-    confusion = zeros(6, 6);
-    for i = 1:length(actual),
-        confusion(actual(i), predictions(i)) = confusion(actual(i), predictions(i)) + 1;
-    end
 end
 
 function [predictions] = testTrees(ts, examples)
