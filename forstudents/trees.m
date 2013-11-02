@@ -2,12 +2,6 @@
 function funs = trees
   funs.cross_fold_validation = @cross_fold_validation;
   funs.build_tree = @build_tree;
-  funs.testTrees = @testTrees;
-  funs.test_tree = @test_tree;
-  funs.choose_label = @choose_label;
-  funs.first_label = @first_label;
-  funs.random_label = @random_label;
-  funs.depth_weighted_label = @depth_weighted_label;
   funs.binary_filter = @binary_filter;
   funs.decision_tree_learning = @decision_tree_learning;
   funs.choose_best_decision_attribute = @choose_best_decision_attribute;
@@ -18,22 +12,16 @@ function funs = trees
 end
 
 function [confusion] = cross_fold_validation(x, y)
-    ten_fold_data_x = {};
-    ten_fold_data_y = {};
+
+    [ten_fold_data_x, ten_fold_data_y] = create_folds(10, x, y);
     
-    bucket_size = fix(length(x) / 10);
-    
-    for i = 0:9,
-        ten_fold_data_x{i+1} = x(i*bucket_size + 1:(i+1)*bucket_size, :);
-        ten_fold_data_y{i+1} = y(i*bucket_size + 1:(i+1)*bucket_size);
-    end
     confusion = zeros(6, 6);
     for i = 1:10,
         test_set_x = ten_fold_data_x{i};
         test_set_y = ten_fold_data_y{i};
         
         training_data_x = []; 
-        training_data_y = []; 
+        training_data_y = [];
         for j = 1:10,
            if (j ~= i),
               training_data_x = vertcat(training_data_x, ten_fold_data_x{j});
@@ -54,78 +42,6 @@ function [tree] = build_tree(x, y, attribute)
     targets = binary_filter(y, attribute);
     attributes = 1:size(x, 2);
     tree = decision_tree_learning(x, attributes, targets);
-end
-
-function [predictions] = testTrees(ts, examples)
-    predictions = [];
-    for i = 1:length(examples),
-        example = examples(i,:);
-        labels = [];
-        depths = [];
-        for t = ts,
-           [labels(end+1), depths(end+1)] = test_tree(t{1}, example); 
-        end
-        predictions(i) = choose_label(labels, depths);  
-    end
-end
-
-function [label, depth] = test_tree(t, example)
-    if isempty(t.kids)
-        label = t.class;
-        depth = 1;
-        return
-    else
-        kid = example(t.op) + 1;
-        [label, depth] = test_tree(t.kids{kid}, example);
-        depth = depth + 1;
-    end
-end
-
-function [label] = choose_label(labels, depths)
-    label = first_label(labels);
-    %label = random_label(labels);
-    %label = depth_weighted_label(labels, depths);
-end
-
-function [label] = first_label(labels)
-    [~, label] = max(labels);
-end
-
-function [label] = random_label(labels)
-    indices = find(labels);
-    if isempty(indices)
-        label = floor(rand(1)*length(labels)) + 1;
-    else
-        random = floor(rand(1)*length(indices)) + 1;
-        label = indices(random);
-    end
-end
-
-function [label] = depth_weighted_label(labels, depths)
-    indices = find(labels);
-    if isempty(indices)
-        max_depth = max(depths);
-        
-        correct_indices = [];
-        for i = 1:length(depths),
-           if depths(i) == max_depth
-               correct_indices(end + 1) = i;
-           end
-        end
-        
-        label = correct_indices(floor(rand(1)*length(correct_indices)) + 1);
-    else
-        min_depth = min(depths(labels==1));
-        
-        correct_indices = [];
-        for i = 1:length(depths),
-           if depths(i) == min_depth && labels(i) == 1
-               correct_indices(end + 1) = i;
-           end
-        end
-        
-        label = correct_indices(floor(rand(1)*length(correct_indices)) + 1);
-    end
 end
 
 function [targets] = binary_filter(labels, target_label)
@@ -172,12 +88,12 @@ function [information_gain] = gain(attribute, examples, binary_targets)
 end
 
 function [i] = information(pos, neg)
-    total = pos + neg;
     % matlab will return NaN if one of the two variables is 0 here since
     % log2(0) = -Inf and -Inf * 0 is NaN
     if pos == 0 || neg == 0
         i = 0;
     else
+        total = pos + neg;
         i = -(pos/total)*log2(pos/total) -(neg/total)*log2(neg/total);
     end
 end
@@ -196,8 +112,6 @@ end
 function [new_examples, new_binary_targets] = split_examples_targets(examples, binary_targets, attribute, value)
     attr_column = examples(:,attribute);
     rows_to_keep = attr_column == value;
-    new_examples = examples;
-    new_examples(~rows_to_keep, :) = [];
-    new_binary_targets = binary_targets;
-    new_binary_targets(~rows_to_keep, :) = [];
+    new_examples = examples(rows_to_keep, :);
+    new_binary_targets = binary_targets(rows_to_keep, :);
 end
