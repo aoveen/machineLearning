@@ -33,8 +33,7 @@ function [confusion] = cross_fold_validation(x, y)
         test_set_y = ten_fold_data_y{i};
         
         training_data_x = []; 
-        training_data_y = [];
-        
+        training_data_y = []; 
         for j = 1:10,
            if (j ~= i),
               training_data_x = vertcat(training_data_x, ten_fold_data_x{j});
@@ -46,7 +45,7 @@ function [confusion] = cross_fold_validation(x, y)
             trees{n} = build_tree(training_data_x, training_data_y, n);
         end
         predictions = testTrees(trees, test_set_x);
-        confusion = confusion + calcConfusionMatrix(test_set_y, predictions);
+        confusion = confusion + calc_confusion_matrix(test_set_y, predictions);
     end
     confusion = confusion / 10;
 end
