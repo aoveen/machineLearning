@@ -16,12 +16,12 @@
 
 In order to gather statistical results of our algorithm and compare the performance of different approaches we implemented a few functions that would help us with this task.
 
-To perform 10-fold cross validation efficiently we implemented the function \texttt{cross\_fold \_validation(x, y)} which takes examples \texttt{x} and classifications \texttt{y} and returns a confusion matrix that was found by performing several tests using 10-fold cross validation. In this function, the set of examples are split into 10 folds, leaving out any extra examples so that each fold is of the same size. In 10 iterations the algorithm then removes one of the buckets as the test set and combines the rest into a training set (no validation set is required in this part of the coursework).The training set is then used to train a decision tree using the \texttt{build\_tree(training\_data\_x, training\_data\_y, attribute} which build the decision tree for the given attribute using the given data (consisting of 9 folds). The function then tests the tree using the \texttt{testTrees} function which returns a vector of predictions. The predictions are then compared to the actual classifications and the results are added to a confusion matrix. After all values have been added from all ten folds the confusion matrix is turned into an average confusion matrix by simply dividing the values by 10 and returned to the user. 
+To perform 10-fold cross validation efficiently we implemented the function \texttt{cross\_fold \_validation(x, y)} which takes examples \texttt{x} and classifications \texttt{y} and returns a confusion matrix that was found by performing several tests using 10-fold cross validation. In this function, the set of examples are split into 10 folds, leaving out any extra examples so that each fold is of the same size. In 10 iterations the algorithm then removes one of the buckets as the test set and combines the rest into a training set (no validation set is required in this part of the coursework).The training set is then used to train a decision tree using the \texttt{build\_tree(training\_data\_x, training\_data\_y, attribute)} which build the decision tree for the given attribute using the given data (consisting of 9 folds). The function then tests the tree using the \texttt{testTrees} function which returns a vector of predictions. The predictions are then compared to the actual classifications and the results are added to a confusion matrix. After all values have been added from all ten folds the confusion matrix is turned into an average confusion matrix by simply dividing the values by 10 and returned to the user. 
 
 Note that this means that any error rate or other statistics given in this report is based on the average confusion matrix and not given in terms of the average of many calculations of that statistic over the course of the cross validation. 
 % elaborate here?
 
-As part of the \texttt{build\_tree} function we implemented a function that selects the best attribute from a set of attributes on which to split the set of examples. This function (\texttt{choose\_best \_decision \_attribute(examples, attributes, binary\_targets)}) maximises the information gain of each possible split and thus returns the attribute that returns the largest information gain (n = negative examples, p = positive examples, $p_0$ = positive examples of the subset of data for which the attribute has a value 0, etc.):
+As part of the \texttt{build\_tree} function we implemented a function that selects the best attribute from a set of attributes on which to split the set of examples. This function (\texttt{choose\-\_best\-\_decision\-\_attribute(examples, attributes, binary\_targets)}) maximises the information gain of each possible split and thus returns the attribute that returns the largest information gain (n = negative examples, p = positive examples, $p_0$ = positive examples of the subset of data for which the attribute has a value 0, etc.):
 
 \begin{align}
 Gain(attribute)  &= I(p,n) - Remainder(attribute)\\
@@ -29,6 +29,7 @@ I(p,n) &= -\left(\frac{p}{p+n}\right)\log_2{\left(\frac{p}{p+n}\right)} -\left(\
 Remainder(attribute) &= \frac{p_0 + n_0}{p+n}I(p_0,n_0) + \frac{p_1 + n_1}{p + n}I(p_1,n_1)
 \end{align}
 Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees.
+%Hector: maybe say we don't calculate gain for performance reasons, instead we just use the min of remainder?
 %elaborate here maybe?
 
 \begin{figure}[!ht]
@@ -48,11 +49,11 @@ Analysis of the clean dataset results in the confusion matrix that can be seen i
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
-	\hline
-	& \multicolumn{7}{ |c| }{Predicted class}\\
-	\hline
-	\multirow{7}{*}{Actual class} & & 1 & 2 & 3 & 4 & 5 & 6\\ \cline{2-8}
-	& 1 & 8.4 & 1.8 & 0.6 & 0.4 & 1.5 & 0.4 \\ \cline{2-8}
+	\cline{3-8}
+	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
+	\cline{3-8}
+	\multicolumn{2}{c|}{} & 1 & 2 & 3 & 4 & 5 & 6\\ \cline{1-8}
+	\multirow{6}{*}{Actual class}& 1 & 8.4 & 1.8 & 0.6 & 0.4 & 1.5 & 0.4 \\ \cline{2-8}
 	& 2 & 1.8 & 14.7 & 0.3 & 1.0 & 1.3 & 0.7\\ \cline{2-8}
 	& 3 & 0.4 & 0.6 & 8.6 & 0.4 & 0.3 & 1.5 \\ \cline{2-8}
 	& 4 & 0.1 & 1.1 & 0.3 & 18.1 & 1.4 & 0.5 \\ \cline{2-8}
@@ -67,10 +68,10 @@ Analysis of the clean dataset results in the confusion matrix that can be seen i
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|c|c|}
-	\hline
-	& \multicolumn{6}{ |c| }{Class}\\
-	\hline
-	& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+	\cline{2-7}
+	\multicolumn{1}{c|}{}& \multicolumn{6}{ |c| }{Class}\\
+	\cline{2-7}
+	\multicolumn{1}{c|}{}& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
 	Recall Rate & 64.1221 & 74.2424 & 72.8814 & 84.1860 & 61.3636 & 83.0097\\ \hline
 	Precision Rate & 67.7419 & 73.1343 & 73.5043 & 84.9765 & 60.0000 & 81.4286\\ \hline
 	$F_1$ & 65.8824 & 73.6842 & 73.1915 & 84.5794 & 60.6742 & 82.2115\\ \hline
@@ -88,11 +89,11 @@ Analysis of the noisy dataset results in the confusion matrix that can be seen i
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
-	\hline
-	& \multicolumn{7}{ |c| }{Predicted class}\\
-	\hline
-	\multirow{7}{*}{Actual class} & & 1 & 2 & 3 & 4 & 5 & 6\\ \cline{2-8}
-	& 1 & 3.1 & 0.7 & 1.7 & 0.8 & 1.9 & 0.6 \\ \cline{2-8}
+	\cline{3-8}
+	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
+	\cline{3-8}
+	\multicolumn{2}{c|}{}  & 1 & 2 & 3 & 4 & 5 & 6\\ \cline{1-8}
+	\multirow{7}{*}{Actual class} & 1 & 3.1 & 0.7 & 1.7 & 0.8 & 1.9 & 0.6 \\ \cline{2-8}
 	& 2 & 1.6 & 12.3 & 2.2 & 1.5 & 0.8 & 0.3\\ \cline{2-8}
 	& 3 & 1.4 & 1.7 & 10.6 & 2.3 & 1.0 & 1.7 \\ \cline{2-8}
 	& 4 & 0.8 & 1.1 & 1.4 & 15.7 & 0.5 & 1.3 \\ \cline{2-8}
