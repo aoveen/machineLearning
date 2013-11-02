@@ -33,8 +33,7 @@ function [confusion] = cross_fold_validation(x, y)
         test_set_y = ten_fold_data_y{i};
         
         training_data_x = []; 
-        training_data_y = [];
-        
+        training_data_y = []; 
         for j = 1:10,
            if (j ~= i),
               training_data_x = vertcat(training_data_x, ten_fold_data_x{j});
@@ -46,7 +45,7 @@ function [confusion] = cross_fold_validation(x, y)
             trees{n} = build_tree(training_data_x, training_data_y, n);
         end
         predictions = testTrees(trees, test_set_x);
-        confusion = confusion + calcConfusionMatrix(test_set_y, predictions);
+        confusion = confusion + calc_confusion_matrix(test_set_y, predictions);
     end
     confusion = confusion / 10;
 end
@@ -129,11 +128,11 @@ function [label] = depth_weighted_label(labels, depths)
     end
 end
 
-function [ targets ] = binary_filter( labels, target_label );
+function [targets] = binary_filter(labels, target_label)
     targets = double(labels == target_label);
 end
 
-function [ decision_tree ] = decision_tree_learning( examples, attributes, binary_targets )
+function [decision_tree] = decision_tree_learning(examples, attributes, binary_targets)
     if all(binary_targets == binary_targets(1))
        decision_tree.class = binary_targets(1);
        decision_tree.kids  = [];
@@ -194,7 +193,7 @@ function [remainder] = remainder(attribute, examples, binary_targets)
     remainder = ((pos0 + neg0)/total)*information(pos0, neg0) + ((pos1 + neg1)/total)*information(pos1, neg1);
 end
 
-function [ new_examples, new_binary_targets ] = split_examples_targets(examples, binary_targets, attribute, value)
+function [new_examples, new_binary_targets] = split_examples_targets(examples, binary_targets, attribute, value)
     attr_column = examples(:,attribute);
     rows_to_keep = attr_column == value;
     new_examples = examples;

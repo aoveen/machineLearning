@@ -1,4 +1,4 @@
-function [confusion] = calcConfusionMatrix(actual, predictions)
+function [confusion] = calc_confusion_matrix(actual, predictions)
 %CALCCONFUSIONMATRIX Given a vector of labels and predicted labels generates
 % a confusion matrix.
     confusion = zeros(6, 6);
