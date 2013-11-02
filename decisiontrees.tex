@@ -262,4 +262,98 @@ The \texttt{treetest} function that is used in the pruning example also returns 
 As we can see in the graphs, the curves corresponding to clean data (figure \ref{fig:pruningClean}) drop faster than the other curves. This is caused by the lack of inconsistencies in the data which means that classification is only hindered by absence of knowledge rather than also conflicting parts of knowledge. Notice that this also has a much larger effect on the development of the verification error rate in figure \ref{fig:pruningNoisy} that corresponds to the noisy data. In noisy (and more likely real-life data) it is thus very important not to overfit the classifier.
 % rewrite this a bit?
 
+\section{Flowcharts}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/cross_fold_validation.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/create_folds.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/build_tree.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/binary_filter.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
+\end{figure}
+
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/choose_best_decision_attribute.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/entropy.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
+\end{figure}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/remainder.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/testtrees.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[p]
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/test_tree.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/depth_weight_label.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/calc_confusion_matrix.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
+\end{figure}
+
+
 \end{document}
