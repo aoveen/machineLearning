@@ -38,10 +38,10 @@ Note that in the implementation of $I(p,n)$ we check explicitly for the case whe
 \caption{Algorithm Description}
 \label{fig:flowchart}
 \end{figure}
-
+%
 \section{Diagrams of six trees}
+See Figure~\ref{fig:tree1}, Figure~\ref{fig:tree2}, Figure~\ref{fig:tree3}, Figure~\ref{fig:tree4}, Figure~\ref{fig:tree5} and Figure~\ref{fig:tree6}
 
-look at the pretty pictures
 
 \section{Evaluation}
 \subsection{Clean Dataset}
@@ -261,5 +261,42 @@ The \texttt{treetest} function that is used in the pruning example also returns 
 
 As we can see in the graphs, the curves corresponding to clean data (figure \ref{fig:pruningClean}) drop faster than the other curves. This is caused by the lack of inconsistencies in the data which means that classification is only hindered by absence of knowledge rather than also conflicting parts of knowledge. Notice that this also has a much larger effect on the development of the verification error rate in figure \ref{fig:pruningNoisy} that corresponds to the noisy data. In noisy (and more likely real-life data) it is thus very important not to overfit the classifier.
 % rewrite this a bit?
+
+\begin{figure}[!hb]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree1.eps}
+     \caption{Tree For Emotion 1}
+     \label{fig:tree1}
+\end{figure}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree2.eps}
+     \caption{Tree For Emotion 2}
+     \label{fig:tree2}
+\end{figure}
+\begin{figure}[!hb]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree3.eps}
+     \caption{Tree For Emotion 3}
+     \label{fig:tree3}
+\end{figure}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree4.eps}
+     \caption{Tree For Emotion 4}
+     \label{fig:tree4}
+\end{figure}
+\begin{figure}[!hb]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree5.eps}
+     \caption{Tree For Emotion 5}
+     \label{fig:tree5}
+\end{figure}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{trees/tree6.eps}
+     \caption{Tree For Emotion 6}
+     \label{fig:tree6}
+\end{figure}
 
 \end{document}
