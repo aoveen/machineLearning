@@ -128,11 +128,11 @@ function [label] = depth_weighted_label(labels, depths)
     end
 end
 
-function [ targets ] = binary_filter( labels, target_label );
+function [targets] = binary_filter(labels, target_label)
     targets = double(labels == target_label);
 end
 
-function [ decision_tree ] = decision_tree_learning( examples, attributes, binary_targets )
+function [decision_tree] = decision_tree_learning(examples, attributes, binary_targets)
     if all(binary_targets == binary_targets(1))
        decision_tree.class = binary_targets(1);
        decision_tree.kids  = [];
@@ -193,7 +193,7 @@ function [remainder] = remainder(attribute, examples, binary_targets)
     remainder = ((pos0 + neg0)/total)*information(pos0, neg0) + ((pos1 + neg1)/total)*information(pos1, neg1);
 end
 
-function [ new_examples, new_binary_targets ] = split_examples_targets(examples, binary_targets, attribute, value)
+function [new_examples, new_binary_targets] = split_examples_targets(examples, binary_targets, attribute, value)
     attr_column = examples(:,attribute);
     rows_to_keep = attr_column == value;
     new_examples = examples;
