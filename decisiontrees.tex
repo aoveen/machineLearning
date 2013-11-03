@@ -28,7 +28,7 @@ Gain(attribute)  &= I(p,n) - Remainder(attribute)\\
 I(p,n) &= -\left(\frac{p}{p+n}\right)\log_2{\left(\frac{p}{p+n}\right)} -\left(\frac{n}{p+n}\right)\log_2{\left(\frac{n}{p+n}\right)}\\
 Remainder(attribute) &= \frac{p_0 + n_0}{p+n}I(p_0,n_0) + \frac{p_1 + n_1}{p + n}I(p_1,n_1)
 \end{align}
-Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees.
+Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees. Also, for performance reasons we do not actually calculate the information gain but instead simply return the minimum value of the remainder.
 %Hector: maybe say we don't calculate gain for performance reasons, instead we just use the min of remainder?
 %elaborate here maybe?
 
