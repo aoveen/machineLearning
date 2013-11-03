@@ -28,7 +28,7 @@ Gain(attribute)  &= I(p,n) - Remainder(attribute)\\
 I(p,n) &= -\left(\frac{p}{p+n}\right)\log_2{\left(\frac{p}{p+n}\right)} -\left(\frac{n}{p+n}\right)\log_2{\left(\frac{n}{p+n}\right)}\\
 Remainder(attribute) &= \frac{p_0 + n_0}{p+n}I(p_0,n_0) + \frac{p_1 + n_1}{p + n}I(p_1,n_1)
 \end{align}
-Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees.
+Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees. Also, for performance reasons we do not actually calculate the information gain but instead simply return the minimum value of the remainder.
 %Hector: maybe say we don't calculate gain for performance reasons, instead we just use the min of remainder?
 %elaborate here maybe?
 
@@ -296,74 +296,94 @@ As we can see in the graphs, the curves corresponding to clean data (figure \ref
 \section{Flowcharts}
 
 \begin{figure}[p]
-	\centering
-	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/cross_fold_validation.png}
-     \caption{Flowchart of \tt{cross\_fold\_validation}}
-     \label{fig:cross_fold_validation}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/cross_fold_validation.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
 \end{figure}
 
 \begin{figure}[p]
-	\centering
-	\includegraphics[height=\textheight, width=10cm]{images/flow_chart/create_folds.png}
-    \caption{Flowchart of \tt{creat\_folds}}
-    \label{fig:create_folds}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/create_folds.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[!ht]
 	\centering
-	\includegraphics[height=11cm, width=10cm]{images/flow_chart/build_tree.png}
-    \caption{Flowchart of \tt{build\_tree}}
-    \label{fig:build_tree}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/build_tree.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/binary_filter.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
 \end{figure}
 
-\begin{figure}[]
-	\centering
-	\includegraphics[height=11cm, width=10cm]{images/flow_chart/binary_filter.png}
-    \caption{Flowchart of \tt{binary\_filter}}
-    \label{fig:binary_filter}
-\end{figure}
 
 \begin{figure}[p]
-		\centering
 		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
-     	\caption{Flowchart of \tt{decision\_tree\_learning}}
-     	\label{fig:id3}
-\end{figure}
-
-
-\begin{figure}[p]
-		\centering
-		\includegraphics[height=15cm, width=10cm]{images/flow_chart/choose_best_decision_attribute.png}
-     	\caption{Flowchart of \tt{choose\_best\_decision\_attribute}}
-     	\label{fig:choose_best_decision_attribute}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
 \end{figure}
 
 \begin{figure}[p]
-		\centering
-		\includegraphics[height=7cm, width=8cm]{images/flow_chart/entropy.png}
-     	\caption{Flowchart of \tt{entropy}}
-     	\label{fig:entropy}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/choose_best_decision_attribute.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/entropy.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
 \end{figure}
 
 \begin{figure}[p]
-		\centering
-		\includegraphics[width=8cm]{images/flow_chart/remainder.png}
-     	\caption{Flowchart of \tt{remainder}}
-     	\label{fig:remainder}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/remainder.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
 \end{figure}
 
 \begin{figure}[p]
-		\centering
-		\includegraphics[height=\textheight]{images/flow_chart/testtrees.png}
-     	\caption{Flowchart of \tt{testtrees}}
-     	\label{fig:testtrees}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/testtrees.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
 \end{figure}
 
 \begin{figure}[p]
-		\centering
-		\includegraphics[height=15cm, width=10cm]{images/flow_chart/test_tree.png}
-     	\caption{Flowchart of \tt{test\_tree}}
-     	\label{fig:test_tree}
+		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/test_tree.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/depth_weight_label.png}
+     	\caption{Pruning Function Applied to Clean Data}
+     	\label{fig:pruningClean}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.495\textwidth}
+		\includegraphics[width=\textwidth]{images/flow_chart/calc_confusion_matrix.png}
+     	\caption{Pruning Function Applied to Noisy Data}
+     	\label{fig:pruningNoisy}
+    \end{subfigure}
+    \caption{Tree Pruning Example}
+    \label{fig:pruning}
 \end{figure}
 
 \end{document}
