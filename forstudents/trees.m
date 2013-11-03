@@ -32,7 +32,7 @@ function [confusion] = cross_fold_validation(x, y)
         for n = 1:6,
             trees{n} = build_tree(training_data_x, training_data_y, n);
         end
-        predictions = testTrees(trees, test_set_x);
+        predictions = test_trees(trees, test_set_x);
         confusion = confusion + calc_confusion_matrix(test_set_y, predictions);
     end
     confusion = confusion / 10;

@@ -16,19 +16,19 @@
 
 In order to gather statistical results of our algorithm and compare the performance of different approaches we implemented a few functions that would help us with this task.
 
-To perform 10-fold cross validation efficiently we implemented the function \texttt{cross\_fold \_validation(x, y)} which takes examples \texttt{x} and classifications \texttt{y} and returns a confusion matrix that was found by performing several tests using 10-fold cross validation. In this function, the set of examples are split into 10 folds, leaving out any extra examples so that each fold is of the same size. In 10 iterations the algorithm then removes one of the buckets as the test set and combines the rest into a training set (no validation set is required in this part of the coursework).The training set is then used to train a decision tree using the \texttt{build\_tree(training\_data\_x, training\_data\_y, attribute)} which build the decision tree for the given attribute using the given data (consisting of 9 folds). The function then tests the tree using the \texttt{testTrees} function which returns a vector of predictions. The predictions are then compared to the actual classifications and the results are added to a confusion matrix. After all values have been added from all ten folds the confusion matrix is turned into an average confusion matrix by simply dividing the values by 10 and returned to the user. 
+To perform 10-fold cross validation efficiently we implemented the function \texttt{cross\_fold \_validation(x, y)}(Figure~\ref{fig:cross_fold_validation}) which takes examples \texttt{x} and classifications \texttt{y} and returns a confusion matrix that was found by performing several tests using 10-fold cross validation. In this function, the set of examples are split into 10 folds using function {\tt create\_folds(10, x, y)}(Figure~\ref{fig:create_folds}), leaving out any extra examples so that each fold is of the same size. In 10 iterations the algorithm then removes one of the buckets as the test set and combines the rest into a training set (no validation set is required in this part of the coursework).The training set is then used to train a decision tree using the \texttt{build\_tree(training\_data\_x, training\_data\_y, attribute)}(Figure~\ref{fig:build_tree}) which build the decision tree for the given attribute using the given data (consisting of 9 folds). The given {\tt training\_data\_y} is converted into a vector of binary target using function {\tt binary\_filter}(Figure~\ref{fig:binary_filter}). The function then tests the trees using the \texttt{test\_trees} function(Figure~\ref{fig:test_trees}) which returns a vector of predictions by calling function {\tt test\_tree}(Figure~\ref{fig:test_tree}) for each tree. If there are more than one tree that return true, an aprropiate algorithm(first positive, random positive, or shortest path) will be applied. The predictions are then compared to the actual classifications and the results are added to a confusion matrix. After all values have been added from all ten folds the confusion matrix is turned into an average confusion matrix by simply dividing the values by 10 and returned to the user. 
 
-Note that this means that any error rate or other statistics given in this report is based on the average confusion matrix and not given in terms of the average of many calculations of that statistic over the course of the cross validation. 
+Note that this means that any error rate or other statistics given in this report is based on the average confusion matrix and not given in terms of the average of many calculations of that statistic over the course of the cross validation.
 % elaborate here?
 
-As part of the \texttt{build\_tree} function we implemented a function that selects the best attribute from a set of attributes on which to split the set of examples. This function (\texttt{choose\-\_best\-\_decision\-\_attribute(examples, attributes, binary\_targets)}) maximises the information gain of each possible split and thus returns the attribute that returns the largest information gain (n = negative examples, p = positive examples, $p_0$ = positive examples of the subset of data for which the attribute has a value 0, etc.):
+As part of the \texttt{build\_tree} function we implemented a function that selects the best attribute from a set of attributes on which to split the set of examples. This function (\texttt{choose\-\_best\-\_decision\-\_attribute(examples, attributes, binary\_targets)} in Figure~\ref{fig:choose_best_decision_attribute}) maximises the information gain of each possible split and thus returns the attribute that returns the largest information gain (n = negative examples, p = positive examples, $p_0$ = positive examples of the subset of data for which the attribute has a value 0, etc.):
 
 \begin{align}
 Gain(attribute)  &= I(p,n) - Remainder(attribute)\\
 I(p,n) &= -\left(\frac{p}{p+n}\right)\log_2{\left(\frac{p}{p+n}\right)} -\left(\frac{n}{p+n}\right)\log_2{\left(\frac{n}{p+n}\right)}\\
 Remainder(attribute) &= \frac{p_0 + n_0}{p+n}I(p_0,n_0) + \frac{p_1 + n_1}{p + n}I(p_1,n_1)
 \end{align}
-Note that in the implementation of $I(p,n)$ we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees. Also, for performance reasons we do not actually calculate the information gain but instead simply return the minimum value of the remainder.
+Note that in the implementation of $I(p,n)$ in Figure~\ref{fig:entropy} we check explicitly for the case when $p = 0$ or $n = 0$ as Matlab will otherwise return $NaN$ which will result in unbalanced trees. Also, for performance reasons we do not actually calculate the information gain but instead simply return the minimum value of the remainder(Figure~\ref{fig:remainder}).
 %Hector: maybe say we don't calculate gain for performance reasons, instead we just use the min of remainder?
 %elaborate here maybe?
 
@@ -294,96 +294,80 @@ As we can see in the graphs, the curves corresponding to clean data (figure \ref
 \end{figure}
 
 \section{Flowcharts}
+See Figure~\ref{fig:cross_fold_validation} for function {\tt cross\_fold\_validation}, Figure~\ref{fig:create_folds} for function {\tt create\_folds}, Figure~\ref{fig:build_tree} for function {\tt build\_tree}, 
+Figure~\ref{fig:binary_filter} for function {\tt binary\_filter}, Figure~\ref{fig:id3} for function {\tt decision\_tree\_learning}, Figure~\ref{fig:choose_best_decision_attribute} for function {\tt choose\_best\_decision\_attribute},
+Figure~\ref{fig:entropy} for function {\tt I}, Figure~\ref{fig:remainder} for function {\tt remainder}, Figure~\ref{fig:test_trees} for function {\tt test\_trees}, and Figure~\ref{fig:test_tree} for function {\tt test\_tree}.
 
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/cross_fold_validation.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-\end{figure}
 
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/create_folds.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/cross_fold_validation.png}
+	\caption{Flowchart of \tt{cross\_fold\_validation}}
+	\label{fig:cross_fold_validation}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/build_tree.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-    \end{subfigure}
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/binary_filter.png}
-     	\caption{Pruning Function Applied to Noisy Data}
-     	\label{fig:pruningNoisy}
-    \end{subfigure}
-    \caption{Tree Pruning Example}
-    \label{fig:pruning}
-\end{figure}
-
-
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-\end{figure}
-
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
+	\includegraphics[height=\textheight, width=10cm]{images/flow_chart/create_folds.png}
+	\caption{Flowchart of \tt{creat\_folds}}
+	\label{fig:create_folds}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/choose_best_decision_attribute.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-    \end{subfigure}
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/entropy.png}
-     	\caption{Pruning Function Applied to Noisy Data}
-     	\label{fig:pruningNoisy}
-    \end{subfigure}
-    \caption{Tree Pruning Example}
-    \label{fig:pruning}
-\end{figure}
-
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/remainder.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-\end{figure}
-
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/testtrees.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-\end{figure}
-
-\begin{figure}[p]
-		\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/test_tree.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
+	\includegraphics[height=11cm, width=10cm]{images/flow_chart/build_tree.png}
+	\caption{Flowchart of \tt{build\_tree}}
+	\label{fig:build_tree}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/depth_weight_label.png}
-     	\caption{Pruning Function Applied to Clean Data}
-     	\label{fig:pruningClean}
-    \end{subfigure}
-	\begin{subfigure}[b]{0.495\textwidth}
-		\includegraphics[width=\textwidth]{images/flow_chart/calc_confusion_matrix.png}
-     	\caption{Pruning Function Applied to Noisy Data}
-     	\label{fig:pruningNoisy}
-    \end{subfigure}
-    \caption{Tree Pruning Example}
-    \label{fig:pruning}
+	\includegraphics[height=11cm, width=10cm]{images/flow_chart/binary_filter.png}
+	\caption{Flowchart of \tt{binary\_filter}}
+	\label{fig:binary_filter}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth, height=\textheight]{images/flow_chart/id3.png}
+	\caption{Flowchart of \tt{decision\_tree\_learning}}
+	\label{fig:id3}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=15cm, width=10cm]{images/flow_chart/choose_best_decision_attribute.png}
+	\caption{Flowchart of \tt{choose\_best\_decision\_attribute}}
+	\label{fig:choose_best_decision_attribute}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=7cm, width=8cm]{images/flow_chart/entropy.png}
+	\caption{Flowchart of \tt{entropy}}
+	\label{fig:entropy}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=8cm]{images/flow_chart/remainder.png}
+	\caption{Flowchart of \tt{remainder}}
+	\label{fig:remainder}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight]{images/flow_chart/test_trees.png}
+	\caption{Flowchart of \tt{test\_trees}}
+	\label{fig:test_trees}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=15cm, width=10cm]{images/flow_chart/test_tree.png}
+	\caption{Flowchart of \tt{test\_tree}}
+	\label{fig:test_tree}
 \end{figure}
 
 \end{document}
