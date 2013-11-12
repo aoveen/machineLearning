@@ -13,7 +13,10 @@ function [ func_name ] = get_best_training_function( x, y)
            [validationX, trainingX] = select_fold(x, i, 3);
            [validationY, trainingY] = select_fold(y, i, 3);
            
-           net = create_nn(trainingX, trainingY, {'trainFcn' strFunc});
+           dataX = vertcat(validationX, trainingX);
+           dataY = vertcat(validationY, trainingY);
+           
+           net = create_nn(dataX, dataY, size(x,1) / 3, {'trainFcn' strFunc});
            predictions = testANN(net, validationX);
            confusion = confusion + calc_confusion_matrix(validationY, predictions); 
         end

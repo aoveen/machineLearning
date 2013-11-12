@@ -26,7 +26,7 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     for i = 1:10
         [testX, trainingX] = select_fold(X, i, 10);
         [testY, trainingY] = select_fold(y, i, 10);
-        net = create_nn(trainingX, trainingY, prams);
+        net = create_nn(trainingX, trainingY, 100, prams);
         predictions = testANN(net, testX);
         confusion = confusion + calc_confusion_matrix(testY, predictions); 
     end
