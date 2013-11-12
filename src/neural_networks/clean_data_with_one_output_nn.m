@@ -1,2 +1,4 @@
 load('/homes/hjd11/proj/machineLearning/support/cleandata_students.mat');
-[x1, y1] = ANNdata(x, y);
+[prams, confusion] = train_a_single_net(x, y);
+prams
+confusion

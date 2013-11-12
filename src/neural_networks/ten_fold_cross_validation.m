@@ -1,4 +1,4 @@
-function [result] = ten_fold_cross_validation(net, x, y)
+function [x1s, y1s] = ten_fold_cross_validation(x, y)
     [xs, ys] = create_folds(10, x, y);
     x1s = {}; 
     y1s = {}; 

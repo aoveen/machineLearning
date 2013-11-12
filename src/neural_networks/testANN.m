@@ -1,6 +1,7 @@
 function [ predictions ] = testANN( nets, x )
 %TESTANN Summary of this function goes here
 %   Detailed explanation goes here
+    [x, ~] = ANNdata(x, []);
     number_of_nets = length(nets);
     if number_of_nets == 1
         t = test_single_ann(nets, x);
