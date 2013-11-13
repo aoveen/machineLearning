@@ -4,21 +4,27 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     
     % Paul and Simon's amazing, awesome spectacular function goes here!
     % prams = select_prams(trainingX, trainingY);
-    prams = {};
     
-    best_function = get_best_training_function(trainingX, trainingY);
-
-    parameter_values = containers.Map;
-    if strcmp(best_function, 'traingd')
-        parameter_values = optimise_gd_params(trainingX, trainingY);
-    elseif strcmp(best_function, 'traingdm')
-        parameter_values = optimise_gdm_params(trainingX, trainingY);
-    elseif strcmp(best_function, 'trainlm')
-        parameter_values = optimise_lm_params(trainingX, trainingY);
+    params = containers.Map;
+    params('show') = NaN;
+    params('showCommandLine') = 0;
+    params('showWindow') = 0;
+    params('time') = inf;
+    
+    get_best_training_function(trainingX, trainingY, params);
+    % Optimise some general parameters here
+    
+    % Optimise function-specific parameters here
+    if strcmp(params('trainFcn'), 'traingd')
+        optimise_gd_params(trainingX, trainingY, params);
+    elseif strcmp(params('trainFcn'), 'traingdm')
+        optimise_gdm_params(trainingX, trainingY, params);
+    elseif strcmp(params('trainFcn'), 'trainlm')
+        optimise_lm_params(trainingX, trainingY, params);
     else
        return; 
     end
-    parameter_values
+    params
     
     return
 
@@ -26,7 +32,7 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     for i = 1:10
         [testX, trainingX] = select_fold(X, i, 10);
         [testY, trainingY] = select_fold(y, i, 10);
-        net = create_nn(trainingX, trainingY, 100, prams);
+        net = create_nn(trainingX, trainingY, 100, params);
         predictions = testANN(net, testX);
         confusion = confusion + calc_confusion_matrix(testY, predictions); 
     end

@@ -7,14 +7,28 @@ function [ net ] = create_nn( x, y, train_validation_boundary, params )
     net.divideFcn = 'divideind';
     net.divideParam.valInd = 1:train_validation_boundary;
     net.divideParam.trainInd = (train_validation_boundary + 1):size(x,2);
+    net.trainFcn = params('trainFcn');
     
-    for i = 1:2:size(params),
-       if strcmp(params{i}, 'trainFcn')
-           net.trainFcn = params{i+1};
-       elseif strcmp(params{i}, 'epochs')
-           net.trainParam.epochs = params{i+1};
+    for key = keys(params),
+       if strcmp(key{1}, 'epochs')
+           net.trainParam.epochs = params(key{1});
+       elseif strcmp(key{1}, 'goal')
+           net.trainParam.goal = params(key{1});
+       elseif strcmp(key{1}, 'max_fail')
+           net.trainParam.max_fail = params(key{1});
+       elseif strcmp(key{1}, 'min_grad')
+           net.trainParam.min_grad = params(key{1});
+       elseif strcmp(key{1}, 'show')
+           net.trainParam.show = params(key{1});
+       elseif strcmp(key{1}, 'showCommandLine')
+           net.trainParam.showCommandLine = params(key{1});
+       elseif strcmp(key{1}, 'showWindow')
+           net.trainParam.showWindow = params(key{1});
+       elseif strcmp(key{1}, 'time')
+           net.trainParam.time = params(key{1});
        end
     end
-    net = train(net, x, y);
+    
+    net = train(net, x, y, 'useParallel', 'yes', 'useGPU', 'yes');
 end
 

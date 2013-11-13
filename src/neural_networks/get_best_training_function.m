@@ -1,4 +1,4 @@
-function [ func_name ] = get_best_training_function( x, y)
+function get_best_training_function( x, y, params)
 %GET_BEST_TRAINING_FUNCTION Returns the name of the training function that
 %gives the best classification rate
     
@@ -16,7 +16,9 @@ function [ func_name ] = get_best_training_function( x, y)
            dataX = vertcat(validationX, trainingX);
            dataY = vertcat(validationY, trainingY);
            
-           net = create_nn(dataX, dataY, size(x,1) / 3, {'trainFcn' strFunc});
+           params('trainFcn') = strFunc;
+           
+           net = create_nn(dataX, dataY, size(x,1) / 3, params);
            predictions = testANN(net, validationX);
            confusion = confusion + calc_confusion_matrix(validationY, predictions); 
         end
@@ -26,6 +28,6 @@ function [ func_name ] = get_best_training_function( x, y)
     end
     [~,index] = max(cell2mat(values(classification_rates)));
     keyset = keys(classification_rates);
-    func_name = keyset{index};
+    params('trainFcn') = keyset{index};
 end
 
