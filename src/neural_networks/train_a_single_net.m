@@ -8,7 +8,7 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     params = containers.Map;
     params('show') = NaN;
     params('showCommandLine') = 0;
-    params('showWindow') = 0;
+    params('showWindow') = 1;
     params('time') = inf;
     
     get_best_training_function(trainingX, trainingY, params);
