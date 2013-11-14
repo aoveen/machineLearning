@@ -11,21 +11,21 @@ function [ params, confusion ] = train_a_single_net( X, y )
     params('showWindow') = 0;
     params('time') = inf;
     
-    params('hiddenSizes') = [45];
+    params('hidden_layers') = [5];
     
-    get_best_training_function(trainingX, trainingY, params);
-    % Optimise some general parameters here
-    
-    % Optimise function-specific parameters here
-    if strcmp(params('trainFcn'), 'traingd')
-        optimise_gd_params(trainingX, trainingY, params);
-    elseif strcmp(params('trainFcn'), 'traingdm')
-        optimise_gdm_params(trainingX, trainingY, params);
-    elseif strcmp(params('trainFcn'), 'trainlm')
-        optimise_lm_params(trainingX, trainingY, params);
-    else
-       return; 
-    end
+%     get_best_training_function(trainingX, trainingY, params);
+%     % Optimise some general parameters here
+%     
+%     % Optimise function-specific parameters here
+%     if strcmp(params('trainFcn'), 'traingd')
+%         optimise_gd_params(trainingX, trainingY, params);
+%     elseif strcmp(params('trainFcn'), 'traingdm')
+%         optimise_gdm_params(trainingX, trainingY, params);
+%     elseif strcmp(params('trainFcn'), 'trainlm')
+%         optimise_lm_params(trainingX, trainingY, params);
+%     else
+%        return; 
+%     end
     
     params('trainFcn') = 'trainlm';
     
