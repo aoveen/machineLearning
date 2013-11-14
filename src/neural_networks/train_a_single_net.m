@@ -1,4 +1,4 @@
-function [ prams, confusion ] = train_a_single_net( X, y )
+function [ params, confusion ] = train_a_single_net( X, y )
     [~, trainingX] = select_fold(X, 1, 10);
     [~, trainingY] = select_fold(y, 1, 10);
     
@@ -8,8 +8,10 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     params = containers.Map;
     params('show') = NaN;
     params('showCommandLine') = 0;
-    params('showWindow') = 1;
+    params('showWindow') = 0;
     params('time') = inf;
+    
+    params('hiddenSizes') = [45];
     
     get_best_training_function(trainingX, trainingY, params);
     % Optimise some general parameters here
@@ -24,9 +26,11 @@ function [ prams, confusion ] = train_a_single_net( X, y )
     else
        return; 
     end
-    params
     
-    return
+    params('trainFcn') = 'trainlm';
+    
+    
+    optimise_layers(trainingX, trainingY, params);
 
     confusion = zeros(6);
     for i = 1:10
