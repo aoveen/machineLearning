@@ -13,11 +13,6 @@ function [ params, confusion ] = train_a_single_net( X, y )
     
     params('hidden_layers') = [1, 30];
     
-    % Hector
-    params('trainFcn') = 'trainlm';
-    optimise_epochs(X, y, params);
-    %
-    
     get_best_training_function(trainingX, trainingY, params);
     optimise_layers(trainingX, trainingY, params);
     hl = params('hidden_layers');
