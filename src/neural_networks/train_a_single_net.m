@@ -11,27 +11,25 @@ function [ params, confusion ] = train_a_single_net( X, y )
     params('showWindow') = 0;
     params('time') = inf;
     
-    params('hidden_layers') = [5];
+    params('hidden_layers') = [3, 30];
     
-%     get_best_training_function(trainingX, trainingY, params);
-%     % Optimise some general parameters here
-%     
-%     % Optimise function-specific parameters here
-%     if strcmp(params('trainFcn'), 'traingd')
-%         optimise_gd_params(trainingX, trainingY, params);
-%     elseif strcmp(params('trainFcn'), 'traingdm')
-%         optimise_gdm_params(trainingX, trainingY, params);
-%     elseif strcmp(params('trainFcn'), 'trainlm')
-%         optimise_lm_params(trainingX, trainingY, params);
-%     else
-%        return; 
-%     end
-    
-    params('trainFcn') = 'trainlm';
-    
-    
+    get_best_training_function(trainingX, trainingY, params);
     optimise_layers(trainingX, trainingY, params);
+    hl = params('hidden_layers');
+    layers = hl(1)
+    nodes = hl(2)
 
+     % Optimise function-specific parameters here
+     if strcmp(params('trainFcn'), 'traingd')
+         optimise_gd_params(trainingX, trainingY, params);
+     elseif strcmp(params('trainFcn'), 'traingdm')
+         optimise_gdm_params(trainingX, trainingY, params);
+     elseif strcmp(params('trainFcn'), 'trainlm')
+         optimise_lm_params(trainingX, trainingY, params);
+     else
+        return; 
+     end
+    
     confusion = zeros(6);
     for i = 1:10
         [testX, trainingX] = select_fold(X, i, 10);
@@ -40,5 +38,7 @@ function [ params, confusion ] = train_a_single_net( X, y )
         predictions = testANN(net, testX);
         confusion = confusion + calc_confusion_matrix(testY, predictions); 
     end
+    confusion = confusion / 10;
+    display(confusion);
 end
 

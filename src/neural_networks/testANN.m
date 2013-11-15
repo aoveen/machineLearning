@@ -8,7 +8,7 @@ function [ predictions ] = testANN( nets, x )
     else
         t = test_multi_ann(nets, x);
     end
-    predictions = NNout2labels(t); %NNout2lables(t);
+    predictions = NNout2labels(t);
 end
 
 function [ t ] = test_single_ann( net, x )
