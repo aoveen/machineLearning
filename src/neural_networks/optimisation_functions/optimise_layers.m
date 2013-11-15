@@ -10,7 +10,7 @@ function optimise_layers( x, y, params )
     [p, q] = meshgrid(min_layers:max_layers, node_num_buckets);
     possible_pairs = [p(:) q(:)]
     
-    three_fold_optimise(x, y, possible_pairs, params, 'hidden_layers');
+    vector_three_fold_optimise(x, y, possible_pairs, params, 'hidden_layers');
     
     hl = params('hidden_layers');
     layers = hl(1)
