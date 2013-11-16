@@ -21,7 +21,7 @@ function [ net ] = create_nn( x, y, train_validation_boundary, params )
        end
     end
     
-    net = train(net, x, y, 'useParallel', 'yes', 'useGPU', 'yes');
+    net = train(net, x, y);
 end
 
 function [result] = make_layers(x, n)
