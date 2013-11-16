@@ -1,4 +1,4 @@
-function three_fold_optimise(x, y, possible_values, params, param)
+function vector_three_fold_optimise(x, y, possible_values, params, param)
     errors = zeros(1,length(possible_values));
     
     for i = 1:length(possible_values),
@@ -10,7 +10,7 @@ function three_fold_optimise(x, y, possible_values, params, param)
            dataX = vertcat(validationX, trainingX);
            dataY = vertcat(validationY, trainingY);
 
-           params(param) = possible_values(i);
+           params(param) = possible_values(i, :);
            net = create_nn(dataX,dataY,floor(size(x,1) / 3), params);
            predictions = testANN(net, validationX);
            confusion = confusion + calc_confusion_matrix(validationY, predictions);
@@ -18,9 +18,9 @@ function three_fold_optimise(x, y, possible_values, params, param)
        confusion = confusion / 3;
        [~,~,~,error] = stats(confusion);
        errors(i) = error;
-       disp(sprintf('TEST %s -> %s = %f', param, mat2str(possible_values(i)), error));
+       disp(sprintf('TEST %s -> %s = %f', param, mat2str(possible_values(i, :)), error));
     end
     
     [~, index] = min(errors);
-    params(param) = possible_values(index);
+    params(param) = possible_values(index, :);
 end
