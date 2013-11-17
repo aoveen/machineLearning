@@ -1,9 +1,8 @@
-function [ params, confusion ] = train_a_single_net( X, y )
-    [~, trainingX] = select_fold(X, 1, 10);
-    [~, trainingY] = select_fold(y, 1, 10);
+function [ params ] = optimise_single_output_net( x, y , emotion)
+    y = y == emotion;
     
-    % Paul and Simon's amazing, awesome spectacular function goes here!
-    % prams = select_prams(trainingX, trainingY);
+    [~, trainingX] = select_fold(x, 1, 10);
+    [~, trainingY] = select_fold(y, 1, 10);
     
     params = containers.Map;
     params('show') = NaN;
@@ -31,16 +30,4 @@ function [ params, confusion ] = train_a_single_net( X, y )
      else
         return; 
      end
-    
-    confusion = zeros(6);
-    for i = 1:10
-        [testX, trainingX] = select_fold(X, i, 10);
-        [testY, trainingY] = select_fold(y, i, 10);
-        net = create_nn(trainingX, trainingY, 100, params);
-        predictions = testANN(net, testX);
-        confusion = confusion + calc_confusion_matrix(testY, predictions); 
-    end
-    confusion = confusion / 10;
-    display(confusion);
 end
-

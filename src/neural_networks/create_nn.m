@@ -1,6 +1,14 @@
 function [ net ] = create_nn( x, y, train_validation_boundary, params )
 %CREATE_SIX_OUTPUT_NN Create a neural network with 6 outputs.
-    [x, y] = ANNdata(x, y);
+    % if we want a single output network we pass in a vector of 0/1s, so we
+    % don't need ANNdata
+    % HACK alarm!
+    if sum(y==6) > 0
+        [x, y] = ANNdata(x, y);
+    else
+        x = x';
+        y = y';
+    end
     
     
     hl = params('hidden_layers');
