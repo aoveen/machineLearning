@@ -2,7 +2,7 @@ function get_best_training_function( x, y, params)
 %GET_BEST_TRAINING_FUNCTION Returns the name of the training function that
 %gives the best classification rate
     
-    candidate_training_fcns = {'traingd' 'traingdm' 'trainlm'};
+    candidate_training_fcns = {'trainlm' 'traingdm' 'traingd'};
     init_value_set = zeros(1,size(candidate_training_fcns,2));
     classification_rates = containers.Map(candidate_training_fcns, init_value_set);
     
@@ -18,7 +18,7 @@ function get_best_training_function( x, y, params)
            
            params('trainFcn') = strFunc;
            
-           net = create_nn(dataX, dataY, size(x,1) / 3, params);
+           net = create_nn(dataX, dataY, floor(size(x,1) / 3), params);
            prediction_raw_values = sim(net, validationX');
 
            if size(prediction_raw_values,1) == 1

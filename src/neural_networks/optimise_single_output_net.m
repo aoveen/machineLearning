@@ -11,14 +11,13 @@ function [ params ] = optimise_single_output_net( x, y , emotion)
     params('time') = inf;
     
     params('hidden_layers') = [1, 30];
-    params('trainFcn') = 'trainlm';
     
+    get_best_training_function(trainingX, trainingY, params);
+
     optimise_layers(trainingX, trainingY, params);
     hl = params('hidden_layers');
     layers = hl(1)
     nodes = hl(2)
-
-    get_best_training_function(trainingX, trainingY, params);
 
      % Optimise function-specific parameters here
      if strcmp(params('trainFcn'), 'traingd')

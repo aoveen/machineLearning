@@ -9,9 +9,12 @@ end
 function [cost] = cost_single(inputs)
     raw = inputs(1);
     target = logical(inputs(2));
+    
+    x = logsig(raw);
+    
     if target == 1
-        cost = -log(raw);
+        cost = -log(x);
     else
-        cost = -log(1-raw);
+        cost = -log(1-x);
     end
 end

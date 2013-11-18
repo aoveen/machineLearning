@@ -26,7 +26,7 @@ function three_fold_optimise(x, y, possible_values, params, param)
        end
        avg_total_cost = avg_total_cost / 3;
        errors(i) = avg_total_cost;
-       disp(sprintf('TEST %s -> %s = %f', param, mat2str(possible_values(i, :)), avg_total_cost));
+       disp(sprintf('TEST %s -> %s = %f', param, mat2str(possible_values(i)), avg_total_cost));
     end
     
     [~, index] = min(errors);
