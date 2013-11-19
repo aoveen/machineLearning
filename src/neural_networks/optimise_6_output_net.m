@@ -11,7 +11,7 @@ function [ params ] = optimise_6_output_net( X, y )
     params('hidden_layers') = [1, 30];
     
     get_best_training_function(trainingX, trainingY, params);
-
+    
     optimise_layers(trainingX, trainingY, params);
     hl = params('hidden_layers');
     layers = hl(1)

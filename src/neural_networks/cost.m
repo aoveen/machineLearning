@@ -9,7 +9,7 @@ end
 function [cost] = cost_single(inputs)
     raw = inputs(1);
     target = logical(inputs(2));
-    
+    raw = raw - 0.5;
     x = logsig(raw);
     
     if target == 1
