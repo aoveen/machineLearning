@@ -11,6 +11,7 @@ function [ params ] = optimise_single_output_net( x, y , emotion)
     params('time') = inf;
     
     params('hidden_layers') = [1, 30];
+    params('transferFcn') = 'tansig';
     
     get_best_training_function(trainingX, trainingY, params);
 
@@ -18,6 +19,8 @@ function [ params ] = optimise_single_output_net( x, y , emotion)
     hl = params('hidden_layers');
     layers = hl(1)
     nodes = hl(2)
+    
+    optimise_transfer_function(trainingX, trainingY, params);
 
      % Optimise function-specific parameters here
      if strcmp(params('trainFcn'), 'traingd')

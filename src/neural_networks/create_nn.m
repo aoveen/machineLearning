@@ -30,10 +30,14 @@ function [ net ] = create_nn( x, y, train_validation_boundary, params )
     end
     
     net.trainFcn = params('trainFcn');
+    
+    for i = 1:layers
+       net.layers{i}.transferFcn = params('transferFcn'); 
+    end
 
     
     for key = keys(params),
-       if ~(strcmp(key{1}, 'trainFcn') || strcmp(key{1}, 'hidden_layers'))
+       if ~(strcmp(key{1}, 'trainFcn') || strcmp(key{1}, 'hidden_layers') || strcmp(key{1}, 'transferFcn'))
            net.trainParam.(key{1}) = params(key{1});
        end
     end
