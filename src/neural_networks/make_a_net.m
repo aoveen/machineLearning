@@ -1,42 +1,43 @@
-load('../../support/noisydata_students.mat')
+load('../../support/cleandata_students.mat') 
 
-params = containers.Map;
-params('show') = NaN;
-params('showCommandLine') = 0;
-params('showWindow') = 0;
-params('time') = inf;
+load('./config_maps/config_6_output.mat')
+load('./config_maps/config_single_outputs.mat')
 
-params('hidden_layers') = [1, 17];
-params('trainFcn') = 'trainlm';
-params('epochs') = 1000;
-params('goal') = 7e-4;
-params('max_fail') = 6;
-params('min_grad') = 2.7e-7;
-params('mu') = 8e-4;
-params('mu_dec') = 0.21;
-params('mu_inc') = 10;
-params('mu_max') = 1e10;
-
-%params('lr') = 0.01;
-%params('mc') = 0.9;
-
-confusion = cell(1, 10);
+confusion_six_output = cell(1, 10);
+confusion_six_single_output = cell(1, 10);
 for i = 1:10
     [testX, trainingX] = select_fold(x, i, 10);
     [testY, trainingY] = select_fold(y, i, 10);
-    net = create_nn(trainingX, trainingY, -1, params);
+    
+    %Six ouput network
+    net = create_nn(trainingX, trainingY, -1, config_6_output);
     predictions = testANN(net, testX);
-    confusion{i} = calc_confusion_matrix(testY, predictions);
-    [r, p, f, e] = stats(confusion{i});
+    confusion_six_output{i} = calc_confusion_matrix(testY, predictions);
+    [r, p, f, e] = stats(confusion_six_output{i});
+    
+    %Single output networks
+    nets = cell(1,6);
+    for j = 1:6
+        trainingYSingle = trainingY == j;
+        nets{j} = create_nn(trainingX, trainingYSingle, -1, config_single_outputs{j});
+    end
+    predictions = testANN(nets, testX);
+    confusion_six_single_output{i} = calc_confusion_matrix(testY, predictions);
+    
 end
 
-avg_f1s = [];
+avg_six_ouput_f1s = [];
+avg_single_ouputs_f1s = [];
 for i = 1:10
-    [~, ~, f, ~] = stats(confusion{i});
-    avg_f1s(end+1) = mean(f);
+    [~, ~, f_six_output, ~] = stats(confusion_six_output{i});
+    avg_six_ouput_f1s(end+1) = mean(f_six_output);
+    [~, ~, f_single_output, ~] = stats(confusion_six_single_output{i});
+    avg_single_ouputs_f1s(end+1) = mean(f_single_output);
 end
 
-plot(1:10, avg_f1s, 'r-x','MarkerSize', 8)
+plot(1:10, avg_six_ouput_f1s, 'r-x', 'MarkerSize', 8)
+hold on
+plot(1:10, avg_single_ouputs_f1s, 'b-x','MarkerSize', 8)
 axis([0, 10, 0, 100])
 hold on
 xlabel('Fold')
