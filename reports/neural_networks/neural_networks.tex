@@ -18,39 +18,43 @@
 
 \section{Implementation Details}
 \subsection{Cross-Validation}
-summary of implementation details, e.g. how we performed cross-validation
+
+% Some more stuff here about implementation details
+
+To validate the performance of our network we performed 10-fold cross validation. We performed 10 folds, each time splitting up our examples into a test and training set. In the first fold we then use 3-fold cross validation inside for each possible value of a parameter, each time splitting up our data into an actual training set and a validation set. As explained below we then use the training data to train a network and optimise the parameters against the validation set, choosing the parameter that performs best on average across all three folds. 
+
+After fixing the parameters, from the first fold we then use the entire training data (everything except test data) to train a network and test its performance on the test set. In each fold, we record the confusion matrix so that we can calculate the average confusion matrix after all folds and then calculate the average recall rate, precision rate and $F_1$ measure as well as average error and classification rate. This approach is consistent with the approach we took in our first assignment.
 
 \subsection{Classification}
-how we classified each example based on the 6 outputs, anything we think is important
-flow chart
+Running the simulation of both types of networks results in a vector of six neural network outputs. These outputs are distributed around the values of 0 and 1, where those closer to 1 represent negative classifications and those around 1 positive classifications. In our implementation, to choose one of the emotions as our final classification, we select the emotion that returned the maximum raw output value of the network. Arguably, an approach that selects the output that is closest to the value 1 would be better -- however, we found that this slight modification does not change the results significantly.
 
 \subsection{Pre-processing and Post-processing}
 
+
+
 \section{Evaluation Process}
 
-\subsection{Finding Optimal Parameters (1)}
-We assumed the parameters to be independent.
-This is not a good assumption since the parameters are not necessarily independent however it is necessary to make the problem of optimising the parameters tractable.
-We first set out each parameter we would have to optimise ???
+\subsection{Finding Optimal Parameters}
+In order to find the optimal parameters for the neural network we ideally would have to perform an exhaustive search on all possible combinations. Since this is not feasible in the time we were given we made some simplifying assumptions that helped us decrease the evaluation time.
 
-To optimise a parameter we took the first fold of the data then for each value of the parameter we where trying we preformed three fold cross validation on that fold recording the average sum of the performance measure over each example in the validation set.
-After doing this for each parameter value we selected the value with best performance measure
+One of our most significant assumptions is independence of parameters. This is not a good assumption since clearly we will reach different conclusions when optimising the parameters in a different order, however, it is necessary to make the problem of optimising the parameters tractable.
 
-For most of the parameters it was possible to do a exhaustive (grid) search (after fixing a reasonable range and step size) however for the topology of the network, the number of layers and the number of nodes within each layer, it still proved impractical to try every combination.
-We did two things to make optimising the topology possible in the time we had, we considered only topologies where every layer had the same number of nodes and we used a two layer search, first finding the best number of nodes to the nearest ten then we have a second search of the ten values on either side of the best result of the larger step\footnote{This will only be the true optimum value if the performance measure given the number of nodes is convex however so long as the larger step is smaller than large fluctuations in the performance measure this should do reasonably well.}.
+We first set out each parameter we would have to optimise. To do this we listed all parameters and analysed the effect each parameter has on the result by fixing all other parameters, varying one parameter and observing the variance in the results. Having done this on a small subset of the data (1 fold) we concluded that the most influential parameters are \emph{training function}, \emph{number of nodes and layers}, \emph{goal}. % more here and do we want to write this? We didn't really do this...
 
-???
-- How we obtained the optimal parameters, topology
-How should we be optimising parameters (not in the first fold only)
-different topologies and parameters we experimented with
+In order to optimise the parameters we selected in the first step of the optimisation process, we implemented 3-fold cross validation inside the training set of the first fold, thus splitting the training set up into a new training set and a validation set and repeating the analysis three times, recording the average sum of the performance of one possible value for a parameter. After doing this for each of the possible parameter values we selected the value with the best performance measure.
 
-\subsection{Performance measure (1)}
-Initially we used the classification error as a performance measure. 
-This worked when we were building the six-output network however when we were building the one-output network this was difficult since you would like to train and optimise each individual network without having to guess whether the particular output it gave would be enough to classify an example.
-We could have considered outputs less than 0.5 to be a negative classification however we would really like penalise or reward an output based on how right or how wrong it was.
-Concretely if an example is labelled 0 and we predict 0.6 it's less bad (and our performance measure should give a better score) then if we predict 1.0. 
+Note that for most of the parameters it was possible to do a exhaustive (grid) search (after fixing a reasonable range and step size). However, for the topology of the network, the number of layers and the number of nodes within each layer, it still proved impractical to try every combination. To make optimising the topology possible in the time we had, we considered only topologies where every layer had the same number of nodes. In addition, we used a two layer search, first finding the best number of nodes to the nearest ten, then followed by a second search of the ten values on either side of the best result of the larger step\footnote{If the performance given by the number of nodes were modelled by a convex function this would result in the true optimum, but should also select a reasonably good value so long as the sensitivity of the parameter is relatively low.}.
 
-To do this we used the following logistic cost function:
+Finally, as suggested in the specification of this coursework we only optimise the parameters in the first fold of the 10-fold cross validation. This means that we are fixing parameters that we obtained in another fold and we cannot actually be sure that the parameter values we found to be optimal are indeed optimal or whether they were influenced by fluctuations in the data set.
+
+Ideally, this issue could be avoided by performing 10-fold cross validation in all folds. However, to be able to compare the optimal parameters in the end and pick the best, we would need to make sure that we always validate the optimal values against the same validation set. For this reason, we would fix a common validation that we could use in each fold. 10-fold cross validation is then performed on the rest of the data, always training the network on a training set, validating it against the fixed validation set and testing it on the test set. This process leads to having the choice between 10 different sets of parameters for a final network. To choose the best value for each parameter we can now choose the most common parameter in the set of optimal parameters.
+
+\subsection{Performance measure}
+For parameter optimisation, we Initially used the classification error as our performance measure. This worked when we were building the six-output network because the network produces multiple outputs and we can choose the classification with the highest certainty as our final classification (see above for explanation). However, when optimising the parameters for a one-output network this is difficult one would like to train and optimise each individual network without having to guess whether the particular output it gave would be enough to classify an example. 
+
+To solve this issue we considered classifying outputs less than 0.5 negatively and outputs greater than or equal to 0.5 positively. However, this approach does not reflect the way we decide on a final classification. Furthermore, we would like to penalise or reward an output based on how right or how wrong it was: concretely, if an example were labelled 0 and we predicted 0.6, this is less bad (and our performance measure should give a better score) than if we predicted 1.0. 
+
+To do this, we use the following logistic cost function:
 
 \[
     Cost(p, y)= 
@@ -60,23 +64,25 @@ To do this we used the following logistic cost function:
 \end{cases}
 \]
 
-Where $p$ is the prediction for an example and $y$ is it's true label.
-We take the sum of this cost function over every example in the validation set as our performance measure 
-This new function gave very similar results to the previous measure on the six-output networks so we where confident it was not completely wrong.
+where $p$ is the prediction value of the neural network for an example and $y$ is its true label. Since the function accepts values between 0 and 1 and the raw output of the network is distributed around 0 or 1 but is not guaranteed to be in this range, we obtained the prediction value by applying the log sigmoid function to it, thus resulting in values between 0 and 1. 
+
+Note, however, that in our case the split between positive and negative classifications for a given emotion is not 50:50. Since the examples are relatively balanced (the number of examples for each emotion is between 100 and 200), we can conclude that approximately $\frac{5}{6}$ of the examples will classify negatively and only $\frac{1}{6}$ will classify positively (see figure \ref{fig:examplesDistribution}).
 
 \begin{figure}[!ht]
      \centering
-     \includegraphics[width=\textwidth]{../../images/clean_hist.png}
-     \caption{Histogram of Neural Network output}
-     \label{fig:tree2}
+     \includegraphics[scale=0.3]{../../images/clean_hist.png}
+     \caption{Histogram of Neural Network Output}
+     \label{fig:examplesDistribution}
 \end{figure}
 
+This distribution means that simply passing the raw value into the log sigmoid function will result in wrong cost values. For instance, if one of the networks' output were 0, this should result in a relatively low value after applying the log sigmoid function. However, since $logsig(0) = 0.5$ this is not the case and the network would be penalised unnecessarily. To avoid this, we shift the log sigmoid function to the right by 0.5 as this seems to be a reasonable cut-off point (see figure \ref{fig:examplesDistribution}).
+
+To optimise the parameters, we take the sum of this cost function over every example in the validation set as our performance measure, meaning that during optimisation we tried to minimise this sum of costs. This new function gave very similar results to the previous measure on the six-output networks so we where confident it was not completely wrong.
 
 \subsection{Avoiding Overfitting (2)}
-We used a few techniques to avoid overfitting the first and most important 
+The \emph{MATLAB} documentation suggests two ways to avoid overfitting: early stopping and regularisation. In our implementation we use the early stopping technique which uses a validation set to determine the right point at which to stop fitting the network to the training data. One of the parameters that this technique uses is \emph{max\_fail} which describes the maximum number of times the error rate in the validation set can increase before the training function stops. This parameter defaults to 6 and any changes we made did not seem to have a large impact on the end results.
 
-\subsection{How should we optimise parameters (3)}
-performance measure we used why we preferred it over other ones
+Regularisation, on the other hand, involves modifying the performance function used by the training function by adding a term that consists of the mean of the sum of squares of the network weights and biases. This new performance function causes the network to have smaller weights and biases and forces the network response to be smoother and less likely to overfit.
 
 \section{Results (3)}
 
