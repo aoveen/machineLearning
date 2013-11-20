@@ -1,4 +1,4 @@
-function [ config_map ] = config_map_builder( hidden_layers, trainFcn, epochs, goal, max_fail, min_grad, mu, mu_dec, mu_inc, mu_max, lr, mc )
+function [ config_map ] = config_map_builder( hidden_layers, trainFcn, epochs, goal, max_fail, min_grad, mu, mu_dec, mu_inc, mu_max, lr, mc, transferFcn )
 
 config_map = containers.Map;
 config_map('show') = NaN;
@@ -12,6 +12,7 @@ config_map('epochs') = epochs;
 config_map('goal') = goal;
 config_map('max_fail') = max_fail;
 config_map('min_grad') = min_grad;
+config_map('transferFcn') = transferFcn;
 
 if strcmp(trainFcn, 'trainlm')   
     config_map('mu') = mu;

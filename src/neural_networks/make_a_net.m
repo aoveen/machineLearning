@@ -10,6 +10,7 @@ for i = 1:10
     [testY, trainingY] = select_fold(y, i, 10);
     
     %Six ouput network
+    disp(sprintf('Fold %d Six Output Network', i));
     net = create_nn(trainingX, trainingY, -1, config_6_output);
     predictions = testANN(net, testX);
     confusion_six_output{i} = calc_confusion_matrix(testY, predictions);
@@ -18,6 +19,7 @@ for i = 1:10
     %Single output networks
     nets = cell(1,6);
     for j = 1:6
+        disp(sprintf('Fold %d Single Output Network %d', i, j));
         trainingYSingle = trainingY == j;
         nets{j} = create_nn(trainingX, trainingYSingle, -1, config_single_outputs{j});
     end
