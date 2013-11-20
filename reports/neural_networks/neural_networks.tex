@@ -62,7 +62,7 @@ To do this we used the following logistic cost function:
 
 Where $p$ is the prediction for an example and $y$ is it's true label.
 We take the sum of this cost function over every example in the validation set as our performance measure 
-This new function gave very similar results to the previous measure on the six-output networks so we where confident it was not completely wrong.
+This new function gave very similar results to the previous measure on the six-output networks so we were confident it was not completely wrong.
 
 \begin{figure}[!ht]
      \centering
@@ -73,12 +73,32 @@ This new function gave very similar results to the previous measure on the six-o
 
 
 \subsection{Avoiding Overfitting (2)}
-We used a few techniques to avoid overfitting the first and most important 
+We used early stopping to avoid overfitting.
+Early stopping is where we stop training if the error on the validation set starts increasing.
+Specifically Matlab Neural Network Toolbox has a parameter {\tt max\_fail} which lets you specify a number of 
+times the validation error can increase. 
+After the validation error has increased {\tt max\_fail} times Matlab stops training and returns the weights which produced the lowest validation error so far.
 
-\subsection{How should we optimise parameters (3)}
-performance measure we used why we preferred it over other ones
+An alternative approach is regularization, regularization modifies the performance function to encourage the network to produce smoother output.
+This approach would again introduce a new parameter to optimise.
+2
 
 \section{Results (3)}
+
+\begin{figure}[!ht]
+     \centering
+     \begin{subfigure}[b]{0.495\textwidth}
+     	\includegraphics[width=\textwidth]{../../images/partially_optimised_everything.png}
+     	\caption{???}
+     	\label{fig:tree2}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.495\textwidth}
+     	\includegraphics[width=\textwidth]{../../images/partially_optimised_six_output_single_defaults.png}
+     	\caption{???}
+     	\label{fig:tree2}
+     \end{subfigure}
+\end{figure}
+
 
 any difference between the average classification performance of the two types, both clean and noisy data. Discuss advantages and disadvantages
 
@@ -90,3 +110,4 @@ figures of the average performance per fold for both types and nosiy/clean; disc
 
 
 \end{document}
+ 
