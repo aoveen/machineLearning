@@ -9,7 +9,7 @@ for i = 1:10
     [testX, trainingX] = select_fold(x, i, 10);
     [testY, trainingY] = select_fold(y, i, 10);
     
-    %Six ouput network
+    %Six output network
     disp(sprintf('Fold %d Six Output Network', i));
     net = create_nn(trainingX, trainingY, -1, config_6_output);
     predictions = testANN(net, testX);
