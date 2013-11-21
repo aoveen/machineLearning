@@ -19,7 +19,9 @@
 
 \section{Implementation Details}
 
-In order to create a multiple-output neural network and multiple single-output neural networks for clean and noisy datas, we wrote a script, {\tt make\_a\_net.m} (Figure~\ref{fig:optimise_6_output_net}), which load corresponding data and the pre-computed optimal parameters and perform a 10-fold cross validation on the entire exapmles. 
+In order to optimise the parameters in a multiple-out neural network and multiple single-output neural network, we wrote functions {\tt optimise\_6\_output\_net} (Figure~\ref{fig:optimise_6_output_net}) and {\tt optimise\_single\_output\_net} (Figure~\ref{fig:optimise_single_output_net}). These functions split examples into 10 folds, leave the first fold as a test set using function {\tt select\_fold} (Figure~\ref{fig:select_fold}), and optimise the parameter on the remaining 9 folds. They both start with default parameters, then optimise different parameters by calling functions {\tt get\_best\_training\_function} (Figure~\ref{fig:get_best_training_function}), {\tt optimise\_layers} (Figure~\ref{fig:optimise_layer}), and {\tt optimise\_tansfer\_function} (Figure~\ref{fig:optimise_transfer_function}). Depend on best function return from {\tt get\_best\_training\_function}, one of the these functions {\tt optimise\_gd\_params} (Figure~\ref{fig:optimise_gd_params}), {\tt optimise\_gdm\_params} (Figure~\ref{fig:optimise_gdm_params}), and {\tt optimise\_lm\_parmas (Figure~\ref{fig:optimise_lm_params})} is called. These functions optimise parameter by perform 3-fold cross validation by either calling {\tt three\_fold\_optimise} (Figure~\ref{fig:three_fold_optimise}) or {\tt vector\_three\_fold\_optimise} (Figure~\ref{fig:vector_three_fold_optimise}). Their performances are measured using function {\tt cost} (Figure~\ref{fig:cost}), and the neural network is created and trained by calling function {\tt create\_nn} (Figure~\ref{fig:create_nn}).
+
+Once the most optimal parameters are found, we called the function {\tt make\_a\_net} (Figure~\ref{fig:make_a_net}) which perform 10-fold cross validation using both a multiple-output neural network and 6 single-output neural network. Their predictions are calculated by calling function {\tt testANN} (Figure~\ref{fig:testann}), and their confusion matrixs are computed using function {\tt cal\_confusion\_matrix} (Figure~\ref{fig:cal_cunfusion_matrix}). More detail about how each functions is implemented can be found by looking at flow charts attached at the end of the report.
 
 \subsection{Cross-Validation}
 
@@ -339,7 +341,7 @@ Finally, figure \ref{tab:avgClassificationRate} shows the average classification
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.7]{images/flow_chart/optimise_layer.png}
-	\caption{Flowchart of \tt{optimise\_layer}}
+	\caption{Flowchart of \tt{optimise\_layers}}
 	\label{fig:optimise_layer}
 \end{figure}
 
