@@ -1,12 +1,10 @@
-function get_best_training_function( x, y, params)
-%GET_BEST_TRAINING_FUNCTION Returns the name of the training function that
-%gives the best classification rate
+function optimise_transfer_function( x, y, params)
+%OPTIMISE_TRANSFER_FUNCTION Optimises the transfer function
+    candidate_transfer_fcns = {'tansig' 'logsig'};
+    init_value_set = zeros(1,size(candidate_transfer_fcns,2));
+    classification_rates = containers.Map(candidate_transfer_fcns, init_value_set);
     
-    candidate_training_fcns = {'trainlm' 'traingdm' 'traingd'};
-    init_value_set = zeros(1,size(candidate_training_fcns,2));
-    classification_rates = containers.Map(candidate_training_fcns, init_value_set);
-    
-    for func = candidate_training_fcns,
+    for func = candidate_transfer_fcns,
         strFunc = func{1};
         avg_total_cost = 0;
         for i = 1:3,
@@ -16,7 +14,7 @@ function get_best_training_function( x, y, params)
            dataX = vertcat(validationX, trainingX);
            dataY = vertcat(validationY, trainingY);
            
-           params('trainFcn') = strFunc;
+           params('transferFcn') = strFunc;
            
            net = create_nn(dataX, dataY, floor(size(x,1) / 3), params);
            prediction_raw_values = sim(net, validationX');
@@ -36,6 +34,6 @@ function get_best_training_function( x, y, params)
     end
     [~,index] = max(cell2mat(values(classification_rates)));
     keyset = keys(classification_rates);
-    params('trainFcn') = keyset{index};
+    params('transferFcn') = keyset{index};
 end
 

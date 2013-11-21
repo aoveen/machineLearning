@@ -1,7 +1,9 @@
 function [acase] = Case(aus, label)
     % label is optional
     if (~exist('label', 'var'))
-        label = 0;
+        label = -1;
     end
-    acase = struct('aus', aus, 'label', label);
+    x = zeros(1, 45);
+    x(aus) = 1;
+    acase = struct('aus', aus, 'x', x, 'label', label);
 end

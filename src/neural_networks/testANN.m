@@ -16,6 +16,9 @@ function [ t ] = test_single_ann( net, x )
 end
 
 function [ t ] = test_multi_ann( nets, x )
-    t = arrayfun(@(net) test_single_ann(net, x), nets);
-    % Select only one 
+    c = cellfun(@(net) test_single_ann(net, x), nets, 'UniformOutput', false);
+    t = c{1};
+    for i = 2:6
+        t = vertcat(t, c{i});
+    end
 end
