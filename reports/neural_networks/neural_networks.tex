@@ -39,6 +39,14 @@ In our case this is not a big problem since are inputs and outputs are all in th
 \section{Evaluation Process}
 
 \subsection{Finding Optimal Parameters}
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[scale=0.6]{images/topology_graph.png}
+     \caption{Topology Optimisation}
+     \label{fig:topologyGraph}
+\end{figure}
+
 In order to find the optimal parameters for the neural network we ideally would have to perform an exhaustive search on all possible combinations. Since this is not feasible in the time we were given we made some simplifying assumptions that helped us decrease the evaluation time.
 
 One of our most significant assumptions is independence of parameters. This is not a good assumption since clearly we will reach different conclusions when optimising the parameters in a different order, however, it is necessary to make the problem of optimising the parameters tractable.
