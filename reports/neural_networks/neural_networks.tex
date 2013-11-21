@@ -7,6 +7,7 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{morefloats}
 
 \setlength{\parskip}{5pt}
 \setlength{\parindent}{0pt}
@@ -17,7 +18,9 @@
 \maketitle
 
 \section{Implementation Details}
-Figures and stuff
+
+In order to create a multiple-output neural network and multiple single-output neural networks for clean and noisy datas, we wrote a script, {\tt make\_a\_net.m} (Figure~\ref{fig:optimise_6_output_net}), which load corresponding data and the pre-computed optimal parameters and perform a 10-fold cross validation on the entire exapmles. 
+
 \subsection{Cross-Validation}
 
 % Some more stuff here about implementation details
@@ -27,7 +30,7 @@ To validate the performance of our network we performed 10-fold cross validation
 After fixing the parameters, from the first fold we then use the entire training data (everything except test data) to train a network and test its performance on the test set. In each fold, we record the confusion matrix so that we can calculate the average confusion matrix after all folds and then calculate the average recall rate, precision rate and $F_1$ measure as well as average error and classification rate. This approach is consistent with the approach we took in our first assignment.
 
 \subsection{Classification}
-Running the simulation of both types of networks results in a vector of six neural network outputs. These outputs are distributed around the values of 0 and 1, where those closer to 1 represent negative classifications and those around 1 positive classifications. In our implementation, to choose one of the emotions as our final classification, we select the emotion that returned the maximum raw output value of the network. Arguably, an approach that selects the output that is closest to the value 1 would be better -- however, we found that this slight modification does not change the results significantly.
+Running the simulation of both types of networks results in a vector of six neural network outputs. These outputs are distributed around the values of 0 and 1, where those closer to 0 represent negative classifications and those around 1 positive classifications. In our implementation, to choose one of the emotions as our final classification, we select the emotion that returned the maximum raw output value of the network. Arguably, an approach that selects the output that is closest to the value 1 would be better -- however, we found that this slight modification does not change the results significantly.
 
 \subsection{Pre-processing and Post-processing}
 
@@ -281,5 +284,117 @@ figures of the average performance per fold for both types and nosiy/clean; disc
 \caption{F1 Measure Per Class}
 \label{tab:f1MeasurenPerClass}
 \end{table}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_6_output_net.png}
+	\caption{Flowchart of \tt{optimise\_6\_output\_net}}
+	\label{fig:optimise_6_output_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_single_output_net.png}
+	\caption{Flowchart of \tt{optimise\_single\_output\_net}}
+	\label{fig:optimise_single_output_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.8]{images/flow_chart/select_fold.png}
+	\caption{Flowchart of \tt{select\_fold}}
+	\label{fig:select_fold}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/get_best_training_function.png}
+	\caption{Flowchart of \tt{get\_best\_training\_function}}
+	\label{fig:get_best_training_function}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/cost.png}
+	\caption{Flowchart of \tt{cost}}
+	\label{fig:cost}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.45]{images/flow_chart/create_nn.png}
+	\caption{Flowchart of \tt{create\_nn}}
+	\label{fig:create_nn}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_layer.png}
+	\caption{Flowchart of \tt{optimise\_layer}}
+	\label{fig:optimise_layer}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/optimise_transfer_function.png}
+	\caption{Flowchart of \tt{optimise\_transfer\_function}}
+	\label{fig:optimise_transfer_function}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_gd_params.png}
+	\caption{Flowchart of \tt{optimise\_gd\_params}}
+	\label{fig:optimise_gd_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_gdm_params.png}
+	\caption{Flowchart of \tt{optimise\_gdm\_params}}
+	\label{fig:optimise_gdm_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_lm_params.png}
+	\caption{Flowchart of \tt{optimise\_lm\_params}}
+	\label{fig:optimise_lm_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/three_fold_optimise.png}
+	\caption{Flowchart of \tt{three\_fold\_optimise}}
+	\label{fig:three_fold_optimise}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/vector_three_fold_optimise.png}
+	\caption{Flowchart of \tt{vector\_three\_fold\_optimise}}
+	\label{fig:vector_three_fold_optimise}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/make_a_net.png}
+	\caption{Flowchart of \tt{make\_a\_net}}
+	\label{fig:make_a_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.63]{images/flow_chart/testann.png}
+	\caption{Flowchart of \tt{testANN}}
+	\label{fig:testann}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.63]{images/flow_chart/cal_cunfusion_matrix.png}
+	\caption{Flowchart of \tt{cal\_cunfusion\_matrix}}
+	\label{fig:cal_cunfusion_matrix}
+\end{figure}
 
 \end{document}
