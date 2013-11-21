@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[margin=1.6cm]{geometry}
+\usepackage[margin=1.4cm]{geometry}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -7,17 +7,20 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{morefloats}
 
 \setlength{\parskip}{5pt}
 \setlength{\parindent}{0pt}
 
 \author{Hector Dearman \and Paul Rowe-White \and Kritaphat Songsriin \and Simon Stuckemann}
-\title{Machine Learning CBC: Neural Networks}
+\title{Machine Learning CBC: Neural Networks\\Group 2}
 \begin{document}
 \maketitle
 
 \section{Implementation Details}
-Figures and stuff
+
+In order to create a multiple-output neural network and multiple single-output neural networks for clean and noisy datas, we wrote a script, {\tt make\_a\_net.m} (Figure~\ref{fig:optimise_6_output_net}), which load corresponding data and the pre-computed optimal parameters and perform a 10-fold cross validation on the entire exapmles. 
+
 \subsection{Cross-Validation}
 
 % Some more stuff here about implementation details
@@ -39,6 +42,14 @@ In our case this is not a big problem since are inputs and outputs are all in th
 \section{Evaluation Process}
 
 \subsection{Finding Optimal Parameters}
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[scale=0.6]{images/topology_graph.png}
+     \caption{Topology Optimisation}
+     \label{fig:topologyGraph}
+\end{figure}
+
 In order to find the optimal parameters for the neural network we ideally would have to perform an exhaustive search on all possible combinations. Since this is not feasible in the time we were given we made some simplifying assumptions that helped us decrease the evaluation time.
 
 One of our most significant assumptions is independence of parameters. This is not a good assumption since clearly we will reach different conclusions when optimising the parameters in a different order, however, it is necessary to make the problem of optimising the parameters tractable.
@@ -61,6 +72,7 @@ Ideally, this issue could be avoided by performing 10-fold cross validation in a
 
 
 \begin{table}
+\centering
 \begin{tabular}{|r|c||c|c|c|c|c|c|}
 \hline 
  & \textbf{6-output net} & \textbf{anger} & \textbf{disgust} & \textbf{fear} & \textbf{happiness} & \textbf{sadness} & \textbf{surprise} \\ 
@@ -69,15 +81,15 @@ Ideally, this issue could be avoided by performing 10-fold cross validation in a
 \hline 
 \textbf{nodes} & $18$ & $26$ & $64$ & $28$ & $22$ & $81$ & $29$ \\ 
 \hline 
-\textbf{train function} & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm \\ 
+\textbf{train function} & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm\\
 \hline 
-\textbf{epochs} & $835$ & $252$ &  & $399$ & $624$ &  & $706$ \\ 
+\textbf{epochs} & $835$ & $252$ & default $1000$ & $399$ & $624$ & default $1000$ & $706$ \\ 
 \hline 
-\textbf{goal} & $1e-4$ & $3e-4$ &  & $5e-4$ & $3e-4$ &  & $6e-4$ \\ 
+\textbf{goal} & $1e-4$ & $3e-4$ & $9e-4$ & $5e-4$ & $3e-4$ & $1e-4$ & $6e-4$ \\ 
 \hline 
-\textbf{max fail} & $4$ & $3$ &  & $4$ & $8$ &  & 9 \\ 
+\textbf{max fail} & $4$ & $3$ & default $6$ & $4$ & $8$ & default $6$ & 9 \\ 
 \hline 
-\textbf{min grad} & $8.9e-7$ & $6.7e-7$ &  & $8e-8$ & $7.5e-7$ & & $4e-8$ \\ 
+\textbf{min grad} & $8.9e-7$ & $6.7e-7$ & $5.2e-7$ & $8e-8$ & $7.5e-7$ & $1.4e-7$ & $4e-8$ \\ 
 \hline 
 \end{tabular} 
 \caption{Optimal Parameter Values}
@@ -286,5 +298,117 @@ Finally, Figure \ref{tab:avgClassificationRate} shows the average classification
 \caption{F1 Measure Per Class}
 \label{tab:f1MeasurenPerClass}
 \end{table}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_6_output_net.png}
+	\caption{Flowchart of \tt{optimise\_6\_output\_net}}
+	\label{fig:optimise_6_output_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_single_output_net.png}
+	\caption{Flowchart of \tt{optimise\_single\_output\_net}}
+	\label{fig:optimise_single_output_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.8]{images/flow_chart/select_fold.png}
+	\caption{Flowchart of \tt{select\_fold}}
+	\label{fig:select_fold}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/get_best_training_function.png}
+	\caption{Flowchart of \tt{get\_best\_training\_function}}
+	\label{fig:get_best_training_function}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/cost.png}
+	\caption{Flowchart of \tt{cost}}
+	\label{fig:cost}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.45]{images/flow_chart/create_nn.png}
+	\caption{Flowchart of \tt{create\_nn}}
+	\label{fig:create_nn}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_layer.png}
+	\caption{Flowchart of \tt{optimise\_layer}}
+	\label{fig:optimise_layer}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/optimise_transfer_function.png}
+	\caption{Flowchart of \tt{optimise\_transfer\_function}}
+	\label{fig:optimise_transfer_function}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_gd_params.png}
+	\caption{Flowchart of \tt{optimise\_gd\_params}}
+	\label{fig:optimise_gd_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_gdm_params.png}
+	\caption{Flowchart of \tt{optimise\_gdm\_params}}
+	\label{fig:optimise_gdm_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.7]{images/flow_chart/optimise_lm_params.png}
+	\caption{Flowchart of \tt{optimise\_lm\_params}}
+	\label{fig:optimise_lm_params}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/three_fold_optimise.png}
+	\caption{Flowchart of \tt{three\_fold\_optimise}}
+	\label{fig:three_fold_optimise}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/vector_three_fold_optimise.png}
+	\caption{Flowchart of \tt{vector\_three\_fold\_optimise}}
+	\label{fig:vector_three_fold_optimise}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=\textheight, width=\textwidth]{images/flow_chart/make_a_net.png}
+	\caption{Flowchart of \tt{make\_a\_net}}
+	\label{fig:make_a_net}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.63]{images/flow_chart/testann.png}
+	\caption{Flowchart of \tt{testANN}}
+	\label{fig:testann}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.63]{images/flow_chart/cal_cunfusion_matrix.png}
+	\caption{Flowchart of \tt{cal\_cunfusion\_matrix}}
+	\label{fig:cal_cunfusion_matrix}
+\end{figure}
 
 \end{document}
