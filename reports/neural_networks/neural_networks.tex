@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[margin=1.6cm]{geometry}
+\usepackage[margin=1.4cm]{geometry}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -13,7 +13,7 @@
 \setlength{\parindent}{0pt}
 
 \author{Hector Dearman \and Paul Rowe-White \and Kritaphat Songsriin \and Simon Stuckemann}
-\title{Machine Learning CBC: Neural Networks}
+\title{Machine Learning CBC: Neural Networks\\Group 2}
 \begin{document}
 \maketitle
 
@@ -33,12 +33,23 @@ After fixing the parameters, from the first fold we then use the entire training
 Running the simulation of both types of networks results in a vector of six neural network outputs. These outputs are distributed around the values of 0 and 1, where those closer to 0 represent negative classifications and those around 1 positive classifications. In our implementation, to choose one of the emotions as our final classification, we select the emotion that returned the maximum raw output value of the network. Arguably, an approach that selects the output that is closest to the value 1 would be better -- however, we found that this slight modification does not change the results significantly.
 
 \subsection{Pre-processing and Post-processing}
+Pre and Post processing are modifications done to the input and output of a network.
+Typically we scale the attributes to be within the range -1 1 and to normalise the variance and mean this avoids problems with differently scaled or large input which can make the network preform badly.
+We undo these modifications on the network output with post processing.
 
-
+In our case this is not a big problem since are inputs and outputs are all in the range -1, 1 anyway, indeed removing pre-processing and post-processing does not seem to particularly effect our performance but in general we left the pre-processing and post-processing turned since it was unlikely to do any harm. 
 
 \section{Evaluation Process}
 
 \subsection{Finding Optimal Parameters}
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[scale=0.6]{images/topology_graph.png}
+     \caption{Topology Optimisation}
+     \label{fig:topologyGraph}
+\end{figure}
+
 In order to find the optimal parameters for the neural network we ideally would have to perform an exhaustive search on all possible combinations. Since this is not feasible in the time we were given we made some simplifying assumptions that helped us decrease the evaluation time.
 
 One of our most significant assumptions is independence of parameters. This is not a good assumption since clearly we will reach different conclusions when optimising the parameters in a different order, however, it is necessary to make the problem of optimising the parameters tractable.
@@ -56,6 +67,7 @@ Ideally, this issue could be avoided by performing 10-fold cross validation in a
 The optimal values for the parameters we optimised can be found in table \
 
 \begin{table}
+\centering
 \begin{tabular}{|r|c||c|c|c|c|c|c|}
 \hline 
  & \textbf{6-output net} & \textbf{anger} & \textbf{disgust} & \textbf{fear} & \textbf{happiness} & \textbf{sadness} & \textbf{surprise} \\ 
@@ -64,15 +76,15 @@ The optimal values for the parameters we optimised can be found in table \
 \hline 
 \textbf{nodes} & $18$ & $26$ & $64$ & $28$ & $22$ & $81$ & $29$ \\ 
 \hline 
-\textbf{train function} & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm \\ 
+\textbf{train function} & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm & trainlm\\
 \hline 
-\textbf{epochs} & $835$ & $252$ &  & $399$ & $624$ &  & $706$ \\ 
+\textbf{epochs} & $835$ & $252$ & default $1000$ & $399$ & $624$ & default $1000$ & $706$ \\ 
 \hline 
-\textbf{goal} & $1e-4$ & $3e-4$ &  & $5e-4$ & $3e-4$ &  & $6e-4$ \\ 
+\textbf{goal} & $1e-4$ & $3e-4$ & $9e-4$ & $5e-4$ & $3e-4$ & $1e-4$ & $6e-4$ \\ 
 \hline 
-\textbf{max fail} & $4$ & $3$ &  & $4$ & $8$ &  & 9 \\ 
+\textbf{max fail} & $4$ & $3$ & default $6$ & $4$ & $8$ & default $6$ & 9 \\ 
 \hline 
-\textbf{min grad} & $8.9e-7$ & $6.7e-7$ &  & $8e-8$ & $7.5e-7$ & & $4e-8$ \\ 
+\textbf{min grad} & $8.9e-7$ & $6.7e-7$ & $5.2e-7$ & $8e-8$ & $7.5e-7$ & $1.4e-7$ & $4e-8$ \\ 
 \hline 
 \end{tabular} 
 \caption{Optimal Parameter Values}
@@ -114,22 +126,19 @@ The \emph{MATLAB} documentation suggests two ways to avoid overfitting: early st
 
 Regularisation, on the other hand, involves modifying the performance function used by the training function by adding a term that consists of the mean of the sum of squares of the network weights and biases. This new performance function causes the network to have smaller weights and biases and forces the network response to be smoother and less likely to overfit.
 
-\section{Results (3)}
+\section{Results}
 
-\subsection{Average F1 Value Per Fold}
-As can be seen in Figure~\ref{fig:avgF1} the average F1 value for the noisy data was lower than the average value F1 value for the clean data. Another difference is that on the clean data the set the single output networks trends above the six output network whereas on the noisy data this trend is reversed and the six output network trends higher than the set of single output networks. However there is not substantial difference between the two different types of network on either figure and there appears to be no more than $5-10\%$ difference in the F1 measure between the two.
+As can be seen in Figure~\ref{fig:avgF1} the average $F_1$ value for the noisy data was lower than the average value $F_1$ value for the clean data. This is expected as the noisy data contains examples which contain values for action units that were not correct as they were machine-read. These inconsistencies naturally have an effect on the final outcome which can be observed in figure \ref{fig:avgF1}.
 
-\subsection{Comments on Results}
+Another difference is that on the clean data the set the single output networks trends above the six output network whereas on the noisy data this trend is reversed and the six output network trends higher than the set of single output networks (see figures \ref{fig:avgF1Clean} and \ref{fig:avgF1Noisy}). However there is not substantial difference between the two different types of network on either figure and there appears to be no more than $5-10\%$ difference in the $F_1$ measure between the two.
 
-We can see that both types of networks consistantly classify happiness and sadness (emotions 4 and 6) with very high precision for both clean and noisy data. The other stand out result is that both types of network perform very poorly when trying to classify anger in noisy data.
+Some advantages of the single six-output network are that it is relatively fast to train and its parameters are relatively fast to optimise. However, a theoretical disadvantage is that the network is not very specific to a single emotion. This means that it is actually more difficult to get appropriate results for all possible inputs. Using six single output networks, on the other hand, solves this problem: the networks can be trained individually and can theoretically pick up small nuances in the data that corresponds to a specific emotion. To reach this level of granularity, a single network would have to be much bigger. A disadvantage of using six single output networks is that it takes much longer to optimise its parameters and indeed train it.
 
-any difference between the average classification performance of the two types, both clean and noisy data. Discuss advantages and disadvantages
+Figures \ref{tab:recallPerClass}  and \ref{tab:precisionPerClass} show the average recall and precision rates per class. Interestingly, we can see that both types of networks consistently classify happiness and surprise (emotions 4 and 6) with very high precision for both clean and noisy data. This rather high performance indicates that it is in fact easier to classify happiness and surprise from the given action units. Indeed, these results agree with the table 1 in the coursework manual which lists the rules that map a set of action units to emotions. Both happiness and surprise are classified on a very unique set of action units with those for happiness being clearer than those for surprise -- a trend that we cannot find in our data.
 
-Commented results on average confusion matrices for both types of network and both clean and noisy with 
-	- avg. classification rate
-	- recall rate, precision rate, and F1 per class
+Another stand out result is that both types of network perform very poorly when trying to classify anger in noisy data. While the networks perform adequately ($F_1(six~outputs) = 72.51$, $F_1(single~output) = 74.3083$) on clean data, the values for noisy data drop significantly to $F_1(six~outputs) = 19.4690$ and $F_1(single~output) = 25.1969$. Looking at the individual recall and precision rates we see that both actually drop, although the the recall rate drops further than the precision rate. In other words, the network classifies fewer examples of the emotion \emph{anger} correctly. One possible reason for this is that the machine is not good at distinguishing some of the crucial action for this emotion.
 
-figures of the average performance per fold for both types and nosiy/clean; discussion
+Finally, figure \ref{tab:avgClassificationRate} shows the average classification rates for both types of data for both noisy and clean data. It is noticeable that all classification rates are above $70\%$ which is acceptable given the amount of time we had and the sacrifices we had to make when optimising the parameters (see above). Again, the table shows that the six single output networks perform slightly better on the clean data, however, the roles are reversed on the noisy dataset which means that the difference between the two is not substantial which leads us to believe that it is often advantages to only opt for a single network with multiple outputs, simply due to the reduced time it takes to optimise and train it.
 
 \begin{figure}[!ht]
 	\centering
