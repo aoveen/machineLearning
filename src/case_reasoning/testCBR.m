@@ -3,7 +3,6 @@ function [predictions] = testCBR(cbr, x)
     predict = cbr.predict;
     for i=1:length(x)
         predictions(i) = predict(cbr, x(i, :));
-        i
     end
 end
 
