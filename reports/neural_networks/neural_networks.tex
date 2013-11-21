@@ -135,16 +135,6 @@ Regularisation, on the other hand, involves modifying the performance function u
 
 As can be seen in Figure~\ref{fig:avgF1} the average $F_1$ value for the noisy data was lower than the average value $F_1$ value for the clean data. This is expected as the noisy data contains examples which contain values for action units that were not correct as they were machine-read. These inconsistencies naturally have an effect on the final outcome which can be observed in Figure \ref{fig:avgF1}.
 
-Another difference is that on the clean data the set the single output networks trends above the six output network whereas on the noisy data this trend is reversed and the six output network trends higher than the set of single output networks (see Figures \ref{fig:avgF1Clean} and \ref{fig:avgF1Noisy}). However there is not substantial difference between the two different types of network on either figure and there appears to be no more than $5-10\%$ difference in the $F_1$ measure between the two.
-
-Some advantages of the single six-output network are that it is relatively fast to train and its parameters are relatively fast to optimise. However, a theoretical disadvantage is that the network is not very specific to a single emotion. This means that it is actually more difficult to get appropriate results for all possible inputs. Using six single output networks, on the other hand, solves this problem: the networks can be trained individually and can theoretically pick up small nuances in the data that corresponds to a specific emotion. To reach this level of granularity, a single network would have to be much bigger. A disadvantage of using six single output networks is that it takes much longer to optimise its parameters and indeed train it.
-
-Figures \ref{tab:recallPerClass}  and \ref{tab:precisionPerClass} show the average recall and precision rates per class. Interestingly, we can see that both types of networks consistently classify happiness and surprise (emotions 4 and 6) with very high precision for both clean and noisy data. This rather high performance indicates that it is in fact easier to classify happiness and surprise from the given action units. Indeed, these results agree with the Table 1 in the coursework manual which lists the rules that map a set of action units to emotions. Both happiness and surprise are classified on a very unique set of action units with those for happiness being clearer than those for surprise -- a trend that is mostly reflected by our results.
-
-Another stand out result is that both types of network perform very poorly when trying to classify anger in noisy data. While the networks perform adequately ($F_1(six~outputs) = 72.51$, $F_1(single~output) = 74.3083$) on clean data, the values for noisy data drop significantly to $F_1(six~outputs) = 19.4690$ and $F_1(single~output) = 25.1969$. Looking at the individual recall and precision rates we see that both actually drop, although the the recall rate drops further than the precision rate. In other words, the network classifies fewer examples of the emotion \emph{anger} correctly. One possible reason for this is that the machine is not good at distinguishing some of the crucial action for this emotion.
-
-Finally, Figure \ref{tab:avgClassificationRate} shows the average classification rates for both types of data for both noisy and clean data. It is noticeable that all classification rates are above $70\%$ which is acceptable given the amount of time we had and the sacrifices we had to make when optimising the parameters (see above). Again, the table shows that the six single output networks perform slightly better on the clean data, however, the roles are reversed on the noisy dataset which means that the difference between the two is not substantial which leads us to believe that it is often advantages to only opt for a single network with multiple outputs, simply due to the reduced time it takes to optimise and train it.
-
 \begin{figure}[!ht]
 	\centering
 	\begin{subfigure}[b]{0.7\textwidth}
@@ -160,6 +150,86 @@ Finally, Figure \ref{tab:avgClassificationRate} shows the average classification
     \caption{Red: Six Output NN, Blue: Single Output NNs}
     \label{fig:avgF1}
 \end{figure}
+
+Another difference is that on the clean data the set the single output networks trends above the six output network whereas on the noisy data this trend is reversed and the six output network trends higher than the set of single output networks (see Figures \ref{fig:avgF1Clean} and \ref{fig:avgF1Noisy}). However there is not substantial difference between the two different types of network on either figure and there appears to be no more than $5-10\%$ difference in the $F_1$ measure between the two.
+
+Some advantages of the single six-output network are that it is relatively fast to train and its parameters are relatively fast to optimise. However, a theoretical disadvantage is that the network is not very specific to a single emotion. This means that it is actually more difficult to get appropriate results for all possible inputs. Using six single output networks, on the other hand, solves this problem: the networks can be trained individually and can theoretically pick up small nuances in the data that corresponds to a specific emotion. To reach this level of granularity, a single network would have to be much bigger. A disadvantage of using six single output networks is that it takes much longer to optimise its parameters and indeed train it.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+	\cline{3-8}
+	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
+	\cline{3-8}
+	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
+	\multirow{2}{*}{Network}& Six Output (Clean) & 69.4656 & 81.3131 & 80.5085 & 93.4884 & 63.6364 & 90.2913 \\ \cline{2-8}  
+	& Six Output (Noisy) & 12.5 & 81.2834 & 73.2620 & 88.4615 & 61.8182 & 83.1818 \\ \cline{2-8} 
+		& Single Outputs (Clean) & 71.7557 & 80.3030 & 81.3559 & 93.9535 & 72.7273 & 90.2913\\ \cline{2-8} 
+	& Single Outputs (Noisy) & 18.1818 & 83.4225 & 64.1711 & 86.0577 & 50.9091 & 82.7273\\ \hline
+
+\end{tabular}
+\caption{Recall Per Class}
+\label{tab:recallPerClass}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+	\cline{3-8}
+	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
+	\cline{3-8}
+	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
+	\multirow{2}{*}{Network}& Six Output (Clean) & 75.8333 & 76.6667 & 79.8319 & 91.3636 & 66.6667 & 90.07317 \\ \cline{2-8}  
+	& Six Output (Noisy) & 44 & 76.7677 & 64.9289 & 82.8829 & 59.6491 & 79.5652 \\ \cline{2-8} 
+		& Single Outputs (Clean) & 77.0492 & 78.7129 & 80.6723 & 90.5830 & 72.1805 & 92.5373\\ \cline{2-8} 
+	& Single Outputs (Noisy) & 41.0256 & 72.2222 & 62.1762 & 82.4885 & 51.8519 & 80.1762\\ \hline
+
+\end{tabular}
+\caption{Precision Per Class}
+\label{tab:precisionPerClass}
+\end{table}
+
+
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+	\cline{3-8}
+	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
+	\cline{3-8}
+	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
+	\multirow{2}{*}{Network}& Six Output (Clean) & 72.51 & 78.9216 & 80.1688 & 92.4138 & 65.1163 & 90.5109 \\ \cline{2-8}  
+	& Six Output (Noisy) & 19.4690 & 78.9610 & 68.8442 & 85.5814 & 60.7143 & 81.3333 \\ \cline{2-8} 
+		& Single Outputs (Clean) & 74.3083 & 79.5 & 81.0127 & 92.2374 & 72.4528 & 91.4005\\ \cline{2-8} 
+	& Single Outputs (Noisy) & 25.1969 & 77.4194 & 63.1579 & 84.2353 & 51.3761 & 81.4318\\ \hline
+
+\end{tabular}
+\caption{F1 Measure Per Class}
+\label{tab:f1MeasurenPerClass}
+\end{table}
+
+
+Figures \ref{tab:recallPerClass}  and \ref{tab:precisionPerClass} show the average recall and precision rates per class. Interestingly, we can see that both types of networks consistently classify happiness and surprise (emotions 4 and 6) with very high precision for both clean and noisy data. This rather high performance indicates that it is in fact easier to classify happiness and surprise from the given action units. Indeed, these results agree with the Table 1 in the coursework manual which lists the rules that map a set of action units to emotions. Both happiness and surprise are classified on a very unique set of action units with those for happiness being clearer than those for surprise -- a trend that is mostly reflected by our results.
+
+Another stand out result is that both types of network perform very poorly when trying to classify anger in noisy data. While the networks perform adequately ($F_1(six~outputs) = 72.51$, $F_1(single~output) = 74.3083$) on clean data, the values for noisy data drop significantly to $F_1(six~outputs) = 19.4690$ and $F_1(single~output) = 25.1969$. Looking at the individual recall and precision rates we see that both actually drop, although the the recall rate drops further than the precision rate. In other words, the network classifies fewer examples of the emotion \emph{anger} correctly. One possible reason for this is that the machine is not good at distinguishing some of the crucial action for this emotion.
+
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|c|c|c|}
+	\cline{3-3}
+	\multicolumn{2}{c|}{} & Average Classification Rate \\ \cline{1-3}
+	\multirow{2}{*}{Network}& Six Output (Clean) & 0.8180  \\ \cline{2-3}  
+	& Six Output (Noisy) & 0.7350  \\ \cline{2-3} 
+		& Single Outputs (Clean) & 0.8330 \\ \cline{2-3} 
+	& Single Outputs (Noisy) & 0.7090 \\ \hline
+
+\end{tabular}
+\caption{Average Classification Rate}
+\label{tab:avgClassificationRate}
+\end{table}
+
+Finally, Figure \ref{tab:avgClassificationRate} shows the average classification rates for both types of data for both noisy and clean data. It is noticeable that all classification rates are above $70\%$ which is acceptable given the amount of time we had and the sacrifices we had to make when optimising the parameters (see above). Again, the table shows that the six single output networks perform slightly better on the clean data, however, the roles are reversed on the noisy dataset which means that the difference between the two is not substantial which leads us to believe that it is often advantages to only opt for a single network with multiple outputs, simply due to the reduced time it takes to optimise and train it.
 
 \begin{table}[!ht]
 \centering
@@ -231,72 +301,6 @@ Finally, Figure \ref{tab:avgClassificationRate} shows the average classification
 \end{tabular}
 \caption{Confusion Matrix of Six Single Output NNs - Noisy Data}
 \label{tab:sixSingleOutputsNoisyConfusion}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|c|c|c|}
-	\cline{3-3}
-	\multicolumn{2}{c|}{} & Average Classification Rate \\ \cline{1-3}
-	\multirow{2}{*}{Network}& Six Output (Clean) & 0.8180  \\ \cline{2-3}  
-	& Six Output (Noisy) & 0.7350  \\ \cline{2-3} 
-		& Single Outputs (Clean) & 0.8330 \\ \cline{2-3} 
-	& Single Outputs (Noisy) & 0.7090 \\ \hline
-
-\end{tabular}
-\caption{Average Classification Rate}
-\label{tab:avgClassificationRate}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|c|c|c|c|c|c|c|}
-	\cline{3-8}
-	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
-	\cline{3-8}
-	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Network}& Six Output (Clean) & 69.4656 & 81.3131 & 80.5085 & 93.4884 & 63.6364 & 90.2913 \\ \cline{2-8}  
-	& Six Output (Noisy) & 12.5 & 81.2834 & 73.2620 & 88.4615 & 61.8182 & 83.1818 \\ \cline{2-8} 
-		& Single Outputs (Clean) & 71.7557 & 80.3030 & 81.3559 & 93.9535 & 72.7273 & 90.2913\\ \cline{2-8} 
-	& Single Outputs (Noisy) & 18.1818 & 83.4225 & 64.1711 & 86.0577 & 50.9091 & 82.7273\\ \hline
-
-\end{tabular}
-\caption{Recall Per Class}
-\label{tab:recallPerClass}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|c|c|c|c|c|c|c|}
-	\cline{3-8}
-	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
-	\cline{3-8}
-	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Network}& Six Output (Clean) & 75.8333 & 76.6667 & 79.8319 & 91.3636 & 66.6667 & 90.07317 \\ \cline{2-8}  
-	& Six Output (Noisy) & 44 & 76.7677 & 64.9289 & 82.8829 & 59.6491 & 79.5652 \\ \cline{2-8} 
-		& Single Outputs (Clean) & 77.0492 & 78.7129 & 80.6723 & 90.5830 & 72.1805 & 92.5373\\ \cline{2-8} 
-	& Single Outputs (Noisy) & 41.0256 & 72.2222 & 62.1762 & 82.4885 & 51.8519 & 80.1762\\ \hline
-
-\end{tabular}
-\caption{Precision Per Class}
-\label{tab:precisionPerClass}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|c|c|c|c|c|c|c|}
-	\cline{3-8}
-	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
-	\cline{3-8}
-	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Network}& Six Output (Clean) & 72.51 & 78.9216 & 80.1688 & 92.4138 & 65.1163 & 90.5109 \\ \cline{2-8}  
-	& Six Output (Noisy) & 19.4690 & 78.9610 & 68.8442 & 85.5814 & 60.7143 & 81.3333 \\ \cline{2-8} 
-		& Single Outputs (Clean) & 74.3083 & 79.5 & 81.0127 & 92.2374 & 72.4528 & 91.4005\\ \cline{2-8} 
-	& Single Outputs (Noisy) & 25.1969 & 77.4194 & 63.1579 & 84.2353 & 51.3761 & 81.4318\\ \hline
-
-\end{tabular}
-\caption{F1 Measure Per Class}
-\label{tab:f1MeasurenPerClass}
 \end{table}
 
 \begin{figure}[!ht]
