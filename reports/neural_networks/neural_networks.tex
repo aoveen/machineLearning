@@ -30,8 +30,11 @@ After fixing the parameters, from the first fold we then use the entire training
 Running the simulation of both types of networks results in a vector of six neural network outputs. These outputs are distributed around the values of 0 and 1, where those closer to 1 represent negative classifications and those around 1 positive classifications. In our implementation, to choose one of the emotions as our final classification, we select the emotion that returned the maximum raw output value of the network. Arguably, an approach that selects the output that is closest to the value 1 would be better -- however, we found that this slight modification does not change the results significantly.
 
 \subsection{Pre-processing and Post-processing}
+Pre and Post processing are modifications done to the input and output of a network.
+Typically we scale the attributes to be within the range -1 1 and to normalise the variance and mean this avoids problems with differently scaled or large input which can make the network preform badly.
+We undo these modifications on the network output with post processing.
 
-
+In our case this is not a big problem since are inputs and outputs are all in the range -1, 1 anyway, indeed removing pre-processing and post-processing does not seem to particularly effect our performance but in general we left the pre-processing and post-processing turned since it was unlikely to do any harm. 
 
 \section{Evaluation Process}
 
