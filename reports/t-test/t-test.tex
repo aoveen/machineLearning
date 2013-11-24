@@ -1,0 +1,38 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.4cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{morefloats}
+
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+
+\author{Hector Dearman \and Paul Rowe-White \and Kritaphat Songsriin \and Simon Stuckemann}
+\title{Machine Learning CBC: Comparison of Machine Learning Algorithms\\Group 2}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Which type of t-test did you use and why?
+How did you adjust the significance level in order to take into account the fact that you perform a multiple comparison test?
+Why do you think the t-test was performed on the classification error and not the F1 measure? What's the theoretical justification for this decision?
+
+\section{T-Test Results}
+T-test results using clean data (part II)
+T-test results using noisy data (part III)
+
+Which algorithm performed better when comparison was performed using the t-test (part I and part II)? Can we claim that this algorithms is a better learning algorithm than the others in general? Why? Why not?
+
+\section{Potential Changes to the Learning Algorithms}
+\subsection{Varying the Number of Folds}
+What is the trade-off between the number of folds you use and the number of examples per fold? In other words, what is going to happen if you use more folds, so you will have fewer examples per fold, or if you use fewer folds, so you will have more examples per fold?
+
+\subsection{Adding Emotions}
+Suppose that we want to add some new emotions to the existing dataset. Which of the examined algorithms are more suitable for incorporating the new classes in terms of engineering effort? Which algorithms need to undergo radical changes in order to include new classes?
+
+\end{document}
