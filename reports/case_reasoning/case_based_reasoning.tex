@@ -18,7 +18,8 @@
 \maketitle
 
 \section{Case-based Reasoning}
-CBR belongs to a specific class of learning algorithm? How are these algorithms called and what are the differences with other learning algorithms, like neural networks and decision trees.
+Contrary to the previous algorithms we have implemented (decision tree learning and artificial neural networks) which belong to the class of \emph{eager learning algorithms}, instance-based learning algorithms belong to the class  of so-called \emph{lazy learning methods}. 
+While \emph{eager learning algorithms} construct a general and explicit description of the target function when training examples are provided, \emph{lazy learning algorithms}, such as \emph{Case-based reasoning} simply store the training examples. Generalising beyond these examples is only done when a new instance must be classified. When a new instance should be classified, the algorithm compares the instance to the existing instances and assigns a target function value (the classification) based on the instance's relation to the already stored values.
 
 \section{Implementation Details}
 Describe implemenation of CBR cases, the retrieve, reuse and retain functions. Flowchart of how the code works.
@@ -33,7 +34,6 @@ Compare the different similarity measures you have used (at least three). What a
 
 \subsection{Dealing with Multiple Best Matches}
 How did you solve the problem of finding two or more best matches with different labels in function RETRIEVE
-
 
 \section{Performance Results}
 
