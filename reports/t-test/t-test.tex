@@ -30,9 +30,21 @@ Which algorithm performed better when comparison was performed using the t-test 
 
 \section{Potential Changes to the Learning Algorithms}
 \subsection{Varying the Number of Folds}
-What is the trade-off between the number of folds you use and the number of examples per fold? In other words, what is going to happen if you use more folds, so you will have fewer examples per fold, or if you use fewer folds, so you will have more examples per fold?
+If the value of K is increased, the number of examples per fold decreases. This means that the size of the training set is closer to the size of the entire data set which in turn means that there is less (pessimistic) bias towards overestimating the true expected error. At the same time though, more examples in the training set mean that there are less examples in the test set. A small number of examples in the test set means that the test set does not represent the real distribution of the data as accurately as before, and thus results in higher variance of the error.
+
+Therefore, there are two different sources for error: variance of the error and also bias of the error. In order to reduce both the bias and the variance of the error the number of examples has to be increase, since the two measures are anti-proportional to each other. In practice, this is often not possible which is why when performing K-fold cross validation one has to make a trade-off between the two sources of error. 
+
+It is easy to recognise that this behaviour of the two sources of error is closely related to the problem of overfitting. As the error due to bias decreases, the error due to variance increases. The point at which the classifier is neither over- nor underfitting is where the increase in variance is equivalent to the reduction in bias.
+
+This means that in order to choose K in K-fold cross validation one has to attempt to find this exact spot.
 
 \subsection{Adding Emotions}
-Suppose that we want to add some new emotions to the existing dataset. Which of the examined algorithms are more suitable for incorporating the new classes in terms of engineering effort? Which algorithms need to undergo radical changes in order to include new classes?
+As discussed in the \emph{Case-based reasoning} report, there are two types of machine learning algorithms: \emph{eager learning algorithms} and \emph{lazy learning algorithms}. 
+
+Eager learning algorithms attempt to find a general approximation of a target function from a set of examples that are given to the learning algorithm as its initial input. \emph{Decision Trees} and \emph{Artificial Neural Networks} are examples of the \emph{eager learning method} as both algorithms find an approximation of the general target function from the example data and are only then ready to classify new instances. This approach means that in order to add additional emotions to the set the learning algorithm would have to find a new approximation of the general target function. From an engineering perspective this means that decision trees would again have to be built using the dataset with a new set of emotions. Note though, that this is a relatively fast process which means that even though the classifier has to be built again, this is possible in a relatively short amount of time.
+
+In contrast, artificial neural networks are built using several parameters. These parameters are optimised using the given data and the actual classifications of the examples that are fed into the optimisation process. Since this is essentially a very large search problem this process can take a long time to complete which means that \emph{artificial neural networks} are by far be the least suitable method for incorporating the new classes.
+
+On the other hand, \emph{lazy learning algorithms} do not attempt to find an approximation of a general target function up front. Instead they simply store past examples and assign an approximate target function to a new instance on the fly based on older examples. This means that \emph{lazy learning methods} adapt very well to change which means that adding new emotions to the classifier is as simple as feeding the algorithm examples of those new emotions.
 
 \end{document}
