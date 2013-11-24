@@ -1,0 +1,43 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.4cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{morefloats}
+
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+
+\author{Hector Dearman \and Paul Rowe-White \and Kritaphat Songsriin \and Simon Stuckemann}
+\title{Machine Learning CBC: Case-Based Reasoning\\Group 2}
+\begin{document}
+\maketitle
+
+\section{Case-based Reasoning}
+CBR belongs to a specific class of learning algorithm? How are these algorithms called and what are the differences with other learning algorithms, like neural networks and decision trees.
+
+\section{Implementation Details}
+Describe implemenation of CBR cases, the retrieve, reuse and retain functions. Flowchart of how the code works.
+
+Describe how you initialise your CBR system.
+
+\subsection{Dealing with Existing Cases}
+Discuss what happens if you try to add a case to the CBR system that is already there (either in the initialisation phase or in the retain function) How did you deal with this issue?
+
+\subsection{Similarity Measures}
+Compare the different similarity measures you have used (at least three). What are the advantages/ disadvantages of each measure?
+
+\subsection{Dealing with Multiple Best Matches}
+How did you solve the problem of finding two or more best matches with different labels in function RETRIEVE
+
+
+\section{Performance Results}
+
+Is there any difference in the CBR performance on noisy and clean data. If yes, why?
+
+Commented results of the average confusion matrix, average classification rate and recall, precision and F1 measures per class.
+\end{document}
