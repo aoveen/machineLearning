@@ -18,15 +18,32 @@
 \maketitle
 
 \section{Introduction}
-Which type of t-test did you use and why?
-How did you adjust the significance level in order to take into account the fact that you perform a multiple comparison test?
+Even though this report does not contain any t-test results, we would use the paired t-test in order to compare the different classifiers. This is because to evaluate the classifiers' performance, we used K-fold cross validation (in particular, we used $K=10$) with the same folds for all classifiers. Therefore, over several folds, we evaluate the performance of our classifiers on the exact same data. This is important since if the classifiers were trained on separate data samples the difference in error could be partially attributable to differences in the makeup of the two samples since the different samples are not independent \cite{Mitchell:1997:ML:541177}. In contrast, using the same folds to measure the performance for all classifiers, we are able to use the \emph{paired t-test} which typically produces tighter confidence intervals because all differences in observed errors in a paired test are due to differences between the hypotheses \cite{Mitchell:1997:ML:541177}.
+
 Why do you think the t-test was performed on the classification error and not the F1 measure? What's the theoretical justification for this decision?
 
-\section{T-Test Results}
-T-test results using clean data (part II)
-T-test results using noisy data (part III)
+\section{Test Results}
+Table \ref{tab:classificationRates} lists the classification rates for the deduction of 6 basic emotions using three different machine learning algorithms. Note that we implemented two different different classifiers using artificial neural networks and we were unable to make a final conclusion as to which classifier performed better. Both versions are therefore included here.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+ & \textbf{Decision Trees} & \textbf{six-output NN} & \textbf{six single-output NN} & \textbf{CBR} \\ 
+\hline 
+\textbf{Clean Data} & $0.7280$ & $0.8180$ & $0.8330$ &  $0.8700$\\ 
+\hline 
+\textbf{Noisy Data} & $0.5930$ & $0.7350$ & $0.7090$ &  $0.7550$\\ 
+\hline 
+\end{tabular}
+\caption{Classification Rates of Performance of Learning Algorithms for Deducing Emotions from Facial Expressions}
+\label{tab:classificationRates}
+\end{table}
 
-Which algorithm performed better when comparison was performed using the t-test (part I and part II)? Can we claim that this algorithms is a better learning algorithm than the others in general? Why? Why not?
+Assuming the differences in classification rate laid out in Table \ref{tab:classificationRates} are statistically significant, the data strongly suggest that the \emph{decision tree} learning algorithm performs by far the worst when classifying emotions from facial expressions. We can see that the classification rate for clean data ($0.7280$) is actually similar to the classification rates of the performance of both neural networks algorithms on the noisy data. The performance of the \emph{decision tree} learning algorithm with $0.5930$ is even worse.
+
+As discussed in the previous reports there is no significant difference between the classification rates of the two versions of the \emph{neural network} learning algorithm. However, the data here suggests that the both \emph{neural network} algorithms perform better than the decision tree algorithm. However, compared to the high performance of the \emph{CBR} approach a performance of approx $80\%$ and $70\%$ for clean and noisy data respectively. Interestingly, this data suggests that neural networks are less susceptible to changes in the data as the performance drop on noisy data is not as significant as that for decision trees. The \emph{case-based reasoning} learning algorithm appears to perform best for learning emotions from facial expression data. The classification rate for the clean dataset is $87\%$ which is relatively good compared to the other algorithms. Also, note that the performance on the noisy data drops similarly to the performance drop in the \emph{artificial neural network} algorithms. However, the performance on noisy data is still higher and, interestingly, also higher than the performance of the \emph{decision tree} learning algorithm on the clean data.
+
+Note that the above results only apply in this particular example. We therefore cannot claim that some algorithms are better learning algorithms in general since the performance of a machine learning algorithm very much depends on its application domain. Different algorithms have different applications and are favourable in different situations.
 
 \section{Potential Changes to the Learning Algorithms}
 \subsection{Varying the Number of Folds}
@@ -46,5 +63,8 @@ Eager learning algorithms attempt to find a general approximation of a target fu
 In contrast, artificial neural networks are built using several parameters. These parameters are optimised using the given data and the actual classifications of the examples that are fed into the optimisation process. Since this is essentially a very large search problem this process can take a long time to complete which means that \emph{artificial neural networks} are by far be the least suitable method for incorporating the new classes.
 
 On the other hand, \emph{lazy learning algorithms} do not attempt to find an approximation of a general target function up front. Instead they simply store past examples and assign an approximate target function to a new instance on the fly based on older examples. This means that \emph{lazy learning methods} adapt very well to change which means that adding new emotions to the classifier is as simple as feeding the algorithm examples of those new emotions.
+
+\bibliography{t-test}
+\bibliographystyle{plain}
 
 \end{document}
