@@ -15,18 +15,7 @@ measures = {
     @yule_dissimilarity_measure
 };
 
-names = char(
-    'rubbish_measure',
-    'shared_aus_measure',
-    'weighted_measure',
-    'jaccard_measure',
-    'dice_dissimilarity_measure',
-    'matching_dissimilarity_measure',
-    'rt_dissimilarity_measure',
-    'rr_dissimilarity_measure',
-    'ss_dissimilarity_measure',
-    'yule_dissimilarity_measure'
-);
+names = {'rubbish_measure', 'shared_aus_measure', 'weighted_measure','jaccard_measure','dice_dissimilarity_measure','matching_dissimilarity_measure','rt_dissimilarity_measure','rr_dissimilarity_measure','ss_dissimilarity_measure','yule_dissimilarity_measure'};
 
 folds = 10;
 newx = x(1:length(x), :);
@@ -34,7 +23,7 @@ newy = y(1:length(y));
 
 for i=1:length(measures)
     m = measures(i);
-    name = names(i, :);
+    name = names(i);
     confuse = zeros(6);
     % cases = [];
     for j=1:folds
@@ -50,7 +39,7 @@ for i=1:length(measures)
     end
     confuse;
     [p, r, f, e] = stats(confuse);
-    printf('RESULT %s = %f\n', name, e);
-    save(strcat('results_nearest_k10_', name), 'confuse', 'p', 'r', 'f', 'e');
-    fflush(stdout); % Octave only
+    display(sprintf('RESULT %s = %f\n', name{1}, e));
+    save(strcat('results_nearest_k10_noisy_', name{1}), 'confuse', 'p', 'r', 'f', 'e');
+    %fflush(stdout); % Octave only
 end
