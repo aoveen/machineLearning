@@ -41,7 +41,7 @@ Is there any difference in the CBR performance on noisy and clean data. If yes, 
 
 Commented results of the average confusion matrix, average classification rate and recall, precision and F1 measures per class.
 
-\subsection{Average Confusion Matrices}
+Table~\ref{tab:avgClassificationRate} shows that there is a difference in performance of CBR on noisy and clean data. This difference is a 10\% - 15\% reduction in average classification rate for noisy data compared to clean data. A reason for this can be that the the noisy data contains attributes that are not relevant to solving the problem (e.g. examples that have the same set of 'core' attributes that can be used to classify it but also have different sets of other attributes that). This means these examples will be spread out when they should actually be close together, and so when a new example needs classifying the examples it should use might be far away from it. The top performing measure, Shared AUs, does not take into account what AUs are important for classification so it may indicate that two examples are similar if they share the same irrelevant AUs.
 
 \begin{table}[!ht]
 \centering
@@ -186,6 +186,7 @@ Commented results of the average confusion matrix, average classification rate a
 \caption{Average Confusion Matrix - RT - Noisy Data}
 \label{tab:rtNoisyConfusion}
 \end{table}
+
 
 \begin{table}[!ht]
 \centering
