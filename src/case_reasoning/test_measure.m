@@ -1,4 +1,4 @@
-function test_measure(x, y, measure, name)
+function test_measure(x, y, measure, name, type)
     folds = 10;
     newx = x(1:length(x), :);
     newy = y(1:length(y));
@@ -19,6 +19,6 @@ function test_measure(x, y, measure, name)
     end
     [p, r, f, e] = stats(confuse);
     display(sprintf('RESULT %s = %f\n', name, e));
-    save(strcat('results_nearest_k10_noisy_', name), 'confuse', 'p', 'r', 'f', 'e');
+    save(strcat(strcat('results_nearest_k_', name), type), 'confuse', 'p', 'r', 'f', 'e');
     %fflush(stdout); % Octave only
 end
