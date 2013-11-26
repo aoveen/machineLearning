@@ -6,14 +6,18 @@ function test_measure(x, y, measure, name, type)
     confuse = zeros(6);
     display(sprintf('Checking results for measure "%s"\n', name));
 
+    k_value = -1;
     for j=1:folds
         [testX, trainingX] = select_fold(newx, j, folds);
         [testY, trainingY] = select_fold(newy, j, folds);
+        
         n = length(trainingY);
         for k=1:n
             cases(k) = Case(xs2aus(trainingX(k, :)), trainingY(k));
         end
-        cbr = nearest_k_cbr(cases, measure, 10, true);
+        cbr = nearest_k_cbr(cases, measure, 10, k_value == -1);
+        k_value = cbr.k;
+
         p = testCBR(cbr, testX);
         confuse = confuse + calc_confusion_matrix(testY, p);
     end
