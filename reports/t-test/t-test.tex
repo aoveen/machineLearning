@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[margin=1.4cm]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -10,7 +10,7 @@
 \usepackage{morefloats}
 
 \setlength{\parskip}{5pt}
-\setlength{\parindent}{0pt}
+%\setlength{\parindent}{0pt}
 
 \author{Hector Dearman \and Paul Rowe-White \and Kritaphat Songsriin \and Simon Stuckemann}
 \title{Machine Learning CBC: Comparison of Machine Learning Algorithms\\Group 2}
@@ -43,7 +43,7 @@ Assuming the differences in classification rate laid out in Table \ref{tab:class
 
 As discussed in the previous reports there is no significant difference between the classification rates of the two versions of the \emph{neural network} learning algorithm. However, the data here suggests that the both \emph{neural network} algorithms perform better than the decision tree algorithm. However, compared to the high performance of the \emph{CBR} approach a performance of approx $80\%$ and $70\%$ for clean and noisy data respectively. Interestingly, this data suggests that neural networks are less susceptible to changes in the data as the performance drop on noisy data is not as significant as that for decision trees. The \emph{case-based reasoning} learning algorithm appears to perform best for learning emotions from facial expression data. The classification rate for the clean dataset is $87\%$ which is relatively good compared to the other algorithms. Also, note that the performance on the noisy data drops similarly to the performance drop in the \emph{artificial neural network} algorithms. However, the performance on noisy data is still higher and, interestingly, also higher than the performance of the \emph{decision tree} learning algorithm on the clean data.
 
-Note that the above results only apply in this particular example. We therefore cannot claim that some algorithms are better learning algorithms in general since the performance of a machine learning algorithm very much depends on its application domain. Different algorithms have different applications and are favourable in different situations.
+Note that the above results only apply in this particular example. We therefore cannot claim that some algorithms are better learning algorithms in general since the performance of a machine learning algorithm very much depends on its application domain. Different algorithms have different applications and are favourable in different situations. In other words, in order to achieve a high accuracy with a machine learning algorithm, this algorithm has to be able to fit the data well. Since no data is the same there is not a single algorithm that always performs better than others. For example, it turns out that the poorly-performing \emph{decision tree} learning algorithm in our case is actually used in practice and performs very well in \emph{Microsoft}'s \emph{Kinect} platform, to recognising body parts \cite{Shotton2011}.
 
 \section{Potential Changes to the Learning Algorithms}
 \subsection{Varying the Number of Folds}
