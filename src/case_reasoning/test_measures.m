@@ -25,7 +25,9 @@ for i=1:length(measures)
     m = measures(i);
     name = names(i);
     confuse = zeros(6);
+    display(sprintf('Checking results for measure "%s"\n', name{1}));
     % cases = [];
+    
     for j=1:folds
         [testX, trainingX] = select_fold(newx, j, folds);
         [testY, trainingY] = select_fold(newy, j, folds);
@@ -33,7 +35,7 @@ for i=1:length(measures)
         for k=1:n
             cases(k) = Case(xs2aus(trainingX(k, :)), trainingY(k));
         end
-        cbr = nearest_k_cbr(cases, m, 10);
+        cbr = nearest_k_cbr(cases, m, 10, true);
         p = testCBR(cbr, testX);
         confuse = confuse + calc_confusion_matrix(testY, p);
     end

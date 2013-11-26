@@ -1,16 +1,54 @@
-function [cbr] = nearest_k_cbr(cases, measure, k)
+function [cbr] = nearest_k_cbr(cases, measure, k, dynamic_optimise)
     cbr = struct('cases', cases, ...
                  'measure', measure, ...
                  'k', k, ...
                  'retain', @nearest_k_retain, ...
                  'reuse', @reuse, ...
                  'predict', @predict, ...
-                 'retrieve', @nearest_k_retrieve );
+                 'retrieve', @nearest_k_retrieve, ...
+                 'dynamic_optimise', dynamic_optimise);
+
+    if cbr.dynamic_optimise
+       optimise_k(cbr) 
+    end
 end
 
 function [the_cbr] = nearest_k_retain(cbr, solvedcase)
     cbr.cases(end+1) = solvedcase;
+    if cbr.dynamic_optimise
+       optimise_k(cbr) 
+    end
     the_cbr = 0;
+end
+
+function optimise_k(cbr)
+    folds = 3;
+    k_limit = floor(length(cbr.cases)*2/3);
+    errors = zeros(1,k_limit);
+    for k = 1:k_limit,
+        confusion = zeros(6);
+        for i = 1:folds
+            [testX, trainingX] = select_fold(cell2mat(arrayfun(@(c) c.x, cbr.cases, 'UniformOutput', false)'), i, folds);
+            [testY, trainingY] = select_fold([cbr.cases.label]', i, folds);
+
+            n = length(trainingY);
+            
+            for j=1:n
+                cases(j) = Case(xs2aus(trainingX(j, :)), trainingY(j));
+            end
+            cbr = nearest_k_cbr(cases, cbr.measure, k, false);
+            p = testCBR(cbr, testX);
+            confusion = confusion + calc_confusion_matrix(testY, p);
+        end
+        confusion = confusion/folds;
+        [~,~,~,e] = stats(confusion);
+        display(sprintf('TEST K=%d (error:%f);', k, e));
+        errors(k) = e;
+    end
+    [min_error, min_idx] = min(errors);
+    display(sprintf('OPTIMISED K=%d (error:%f)\n', min_idx, min_error));
+
+    cbr.k = min_idx;
 end
 
 function [best_match] = nearest_k_retrieve(cbr, newcase)
