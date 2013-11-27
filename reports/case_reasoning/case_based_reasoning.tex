@@ -50,22 +50,22 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 \centering
 \begin{tabular}{|l|l|c|c|}
 	\cline{3-4}
-	\multicolumn{2}{c}{}& \multicolumn{2}{ |c| }{Average Classification Error Rate}\\
+	\multicolumn{2}{c}{}& \multicolumn{2}{ |c| }{Average Classification Rate}\\
 	\cline{3-4}
 	\multicolumn{2}{c|}{} & Clean & Noisy \\ \cline{1-4}
-	\multirow{10}{*}{Similarity Measure}& Dice Dissimilarity & 0.1910 & 0.3820   \\ \cline{2-4}
-	& Jaccard & 0.1910 & 0.3820  \\ \cline{2-4}
-	& Matching Dissimilarity & 0.1400 & 0.2970   \\ \cline{2-4}
-	& RR Dissimilarity & 0.2740  & 0.4070  \\ \cline{2-4}
-	& RT Dissimilarity & 0.1400  & 0.2970   \\ \cline{2-4}	
-	& Rubbish & 0.8070 & 0.8130  \\ \cline{2-4}
-	& Shared AUs & 0.1400 & 0.2970   \\ \cline{2-4}
-	& SS Dissimilarity & 0.1910 & 0.3820  \\ \cline{2-4}
-	& Weighted & 0.1330 & 0.3180   \\ \cline{2-4}
-	& Yule Dissimilarity & 0.2040 & 0.4050\\ \hline
+	\multirow{10}{*}{Similarity Measure}& Dice Dissimilarity & 0.809 & 0.618   \\ \cline{2-4}
+	& Jaccard & 0.809 & 0.618  \\ \cline{2-4}
+	& Matching Dissimilarity & 0.86 & 0.703   \\ \cline{2-4}
+	& RR Dissimilarity & 0.726  & 0.593  \\ \cline{2-4}
+	& RT Dissimilarity & 0.86  & 0.703   \\ \cline{2-4}	
+	& Rubbish & 0.193 & 0.187  \\ \cline{2-4}
+	& Shared AUs & 0.86 & 0.703   \\ \cline{2-4}
+	& SS Dissimilarity & 0.809 & 0.618  \\ \cline{2-4}
+	& Weighted & 0.867 & 0.682   \\ \cline{2-4}
+	& Yule Dissimilarity & 0.796 & 0.595\\ \hline
 \end{tabular}
-\caption{Average Classification Error Rate}
-\label{tab:avgClassificationError}
+\caption{Average Classification Rate}
+\label{tab:avgClassificationRate}
 \end{table}
 
 \begin{table}[!ht]
@@ -75,14 +75,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 10.1 & 1.7 & 0.4 & 0.3 & 0.5 & 0.1 \\ \cline{2-8}
-	& 2 Disgust & 0.7 & 18.1 & 0.2 & 0.5 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.4 & 0.3 & 8.7 & 0.2 & 0.0 & 2.2 \\ \cline{2-8}
-	& 4 Happiness & 0 & 0.6 & 0 & 20.9 & 0 & 0 \\ \cline{2-8}
-	& 5 Sadness & 0.5 & 2.3 & 0.1 & 0.5 & 9.5 & 0.3 \\ \cline{2-8}
-	& 6 Surprise & 0 & 0.1 & 0.5 & 0.3 & 0 & 19.7\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 110 & 8 & 4 & 2 & 6 & 1 \\ \cline{2-8}
+	& 2 Disgust & 14 & 161 & 1 & 8 & 13 & 1\\ \cline{2-8}
+	& 3 Fear & 7 & 6 & 95 & 0 & 0 & 10 \\ \cline{2-8}
+	& 4 Happiness & 0 & 9 & 0 & 204 & 0 & 2 \\ \cline{2-8}
+	& 5 Sadness & 8 & 16 & 2 & 4 & 101 & 1 \\ \cline{2-8}
+	& 6 Surprise & 1 & 3 & 9 & 3 & 0 & 189\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Shared AUs - Clean Data}
+\caption{Confusion Matrix - Shared AUs - Clean Data}
 \label{tab:sharedAUsCleanConfusion}
 \end{table}
 
@@ -93,14 +93,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 4 & 1.1 & 2 & 0.4 & 0.8 & 0.5 \\ \cline{2-8}
-	& 2 Disgust & 0.4 & 16.7 & 1 & 0.3 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.8 & 1.6 & 12.9 & 1.1 & 0.3 & 2\\ \cline{2-8}
-	& 4 Happiness & 0.4 & 0.8 & 1.1 & 17.7 & 0.2 & 0.6 \\ \cline{2-8}
-	& 5 Sadness & 2.9 & 0.8 & 1.3 & 0.3 & 5.2 & 0.5 \\ \cline{2-8}
-	& 6 Surprise & 0.3 & 0.2 & 1.2 & 0.6 & 0.7 & 19\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 40 & 13 & 17 & 4 & 10 & 4 \\ \cline{2-8}
+	& 2 Disgust & 15 & 148 & 16 & 3 & 4 & 1\\ \cline{2-8}
+	& 3 Fear & 17 & 16 & 120 & 11 & 7 & 16\\ \cline{2-8}
+	& 4 Happiness & 13 & 10 & 13 & 163 & 1 & 8 \\ \cline{2-8}
+	& 5 Sadness & 26 & 12 & 7 & 3 & 57 & 5 \\ \cline{2-8}
+	& 6 Surprise & 9 & 4 & 16 & 8 & 8 & 175\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Shared AUs - Noisy Data}
+\caption{Confusion Matrix - Shared AUs - Noisy Data}
 \label{tab:sharedAUsNoisyConfusion}
 \end{table}
 
@@ -111,14 +111,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 10.2 & 1.6 & 0.4 & 0.2 & 0.6 & 0.1 \\ \cline{2-8}
-	& 2 Disgust & 1.1 & 17.6 & 0 & 0.4 & 0.6 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.3 & 0.2 & 9.8 & 0.4 & 0.3 & 0.8 \\ \cline{2-8}
-	& 4 Happiness & 0 & 0.3 & 0.1 & 20.9 & 0 & 0.2 \\ \cline{2-8}
-	& 5 Sadness & 0.7 & 2.3 & 0.2 & 0.5 & 9.3 & 0.2 \\ \cline{2-8}
-	& 6 Surprise & 0 & 0.1 & 0.7 & 0.5 & 0 & 19.3\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 103 & 11 & 4 & 2 & 10 & 1 \\ \cline{2-8}
+	& 2 Disgust & 12 & 173 & 0 & 2 & 10 & 1\\ \cline{2-8}
+	& 3 Fear & 7 & 7 & 95 & 2 & 0 & 7 \\ \cline{2-8}
+	& 4 Happiness & 0 & 9 & 1 & 204 & 0 & 1 \\ \cline{2-8}
+	& 5 Sadness & 13 & 15 & 3 & 1 & 100 & 0 \\ \cline{2-8}
+	& 6 Surprise & 1 & 2 & 5 & 6 & 0 & 192\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Weighted - Clean Data}
+\caption{Confusion Matrix - Weighted - Clean Data}
 \label{tab:weightedCleanConfusion}
 \end{table}
 
@@ -129,14 +129,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 3.3 & 1.8 & 1.8 & 0.5 & 1.1 & 0.3 \\ \cline{2-8}
-	& 2 Disgust & 1.5 & 14.7 & 1.3 & 0.5 & 0.5 & 0.2\\ \cline{2-8}
-	& 3 Fear & 1 & 1 & 13 & 0.7 & 0.8 & 2.2 \\ \cline{2-8}
-	& 4 Happiness & 0.4 & 1 & 1 & 17.8 & 0.1 & 0.5 \\ \cline{2-8}
-	& 5 Sadness & 1.4 & 1.4 & 1.8 & 0.1 & 6 & 0.3 \\ \cline{2-8}
-	& 6 Surprise & 0.3 & 0.2 & 1.1 & 0.8 & 0.8 & 18.8\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 34 & 21 & 19 & 2 & 9 & 3 \\ \cline{2-8}
+	& 2 Disgust & 24 & 138 & 12 & 4 & 6 & 3\\ \cline{2-8}
+	& 3 Fear & 12 & 17 & 118 & 11 & 8 & 21 \\ \cline{2-8}
+	& 4 Happiness & 12 & 12 & 11 & 162 & 1 & 10 \\ \cline{2-8}
+	& 5 Sadness & 25 & 17 & 13 & 1 & 48 & 6 \\ \cline{2-8}
+	& 6 Surprise & 4 & 4 & 13 & 10 & 7 & 182\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Weighted - Noisy Data}
+\caption{Confusion Matrix - Weighted - Noisy Data}
 \label{tab:weightedNoisyConfusion}
 \end{table}
 
@@ -147,15 +147,15 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 10.1 & 1.7 & 0.4 & 0.3 & 0.5 & 0.1 \\ \cline{2-8}
-	& 2 Disgust & 0.7 & 18.1 & 0.2 & 0.5 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.4 & 0.3 & 8.7 & 0.2 & 0 & 2.2 \\ \cline{2-8}
-	& 4 Happiness & 0 & 0.6 & 0 & 20.9 & 0 & 0 \\ \cline{2-8}
-	& 5 Sadness & 0.5 & 2.3 & 0.1 & 0.5 & 9.5 & 0.3 \\ \cline{2-8}
-	& 6 Surprise & 0 & 0.1 & 0.5 & 0.3 & 0 & 19.7\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 104 & 12 & 5 & 2 & 6 & 2 \\ \cline{2-8}
+	& 2 Disgust & 23 & 152 & 3 & 9 & 10 & 1\\ \cline{2-8}
+	& 3 Fear & 11 & 4 & 87 & 1 & 0 & 15 \\ \cline{2-8}
+	& 4 Happiness & 5 & 6 & 4 & 197 & 0 & 3 \\ \cline{2-8}
+	& 5 Sadness & 11 & 21 & 8 & 4 & 86 & 2 \\ \cline{2-8}
+	& 6 Surprise & 3 & 3 & 12 & 5 & 0 & 183\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Matching - Clean Data}
-\label{tab:matchingCleanConfusion}
+\caption{Confusion Matrix - Dice Dissimilarity - Clean Data}
+\label{tab:diceCleanConfusion}
 \end{table}
 
 \begin{table}[!ht]
@@ -165,15 +165,15 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 4 & 1.1 & 2 & 0.4 & 0.8 & 0.5 \\ \cline{2-8}
-	& 2 Disgust & 0.4 & 16.7 & 1 & 0.3 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.8 & 1.6 & 12.9 & 1.1 & 0.3 & 2 \\ \cline{2-8}
-	& 4 Happiness & 0.4 & 0.8 & 1.1 & 17.7 & 0.2 & 0.6 \\ \cline{2-8}
-	& 5 Sadness & 2.9 & 0.8 & 1.3 & 0.3 & 5.2 & 0.5 \\ \cline{2-8}
-	& 6 Surprise & 0.3 & 0.2 & 1.2 & 0.6 & 0.7 & 19\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 25 & 21 & 26 & 5 & 6 & 5 \\ \cline{2-8}
+	& 2 Disgust & 17 & 150 & 8 & 6 & 3 & 3\\ \cline{2-8}
+	& 3 Fear & 23 & 22 & 102 & 14 & 3 & 23 \\ \cline{2-8}
+	& 4 Happiness & 8 & 20 & 20 & 144 & 2 & 14 \\ \cline{2-8}
+	& 5 Sadness & 19 & 15 & 20 & 7 & 29 & 20 \\ \cline{2-8}
+	& 6 Surprise & 6 & 11 & 19 & 10 & 6 & 168\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - Matching - Noisy Data}
-\label{tab:matchingNoisyConfusion}
+\caption{Confusion Matrix -  Dice Dissimilarity - Noisy Data}
+\label{tab:diceNoisyConfusion}
 \end{table}
 
 \begin{table}[!ht]
@@ -183,15 +183,15 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 10.1 & 1.7 & 0.4 & 0.3 & 0.5 & 0.1 \\ \cline{2-8}
-	& 2 Disgust & 0.7 & 18.1 & 0.2 & 0.5 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.4 & 0.3 & 8.7 & 0.2 & 0 & 2.2 \\ \cline{2-8}
-	& 4 Happiness & 0 & 0.6 & 0 & 20.9 & 0 & 0 \\ \cline{2-8}
-	& 5 Sadness & 0.5 & 2.3 & 0.1 & 0.5 & 9.5 & 0.3 \\ \cline{2-8}
-	& 6 Surprise & 0 & 0.1 & 0.5 & 0.3 & 0 & 19.7\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 69 & 16 & 6 & 1 & 38 & 1 \\ \cline{2-8}
+	& 2 Disgust & 8 & 172 & 4 & 2 & 12 & 0\\ \cline{2-8}
+	& 3 Fear & 4 & 7 & 85 & 1 & 13 & 8 \\ \cline{2-8}
+	& 4 Happiness & 2 & 13 & 2 & 189 & 7 & 2 \\ \cline{2-8}
+	& 5 Sadness & 1 & 22 & 3 & 1 & 104 & 1 \\ \cline{2-8}
+	& 6 Surprise & 1 & 4 & 12 & 4 & 8 & 177\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - RT - Clean Data}
-\label{tab:rtCleanConfusion}
+\caption{Confusion Matrix - Yule Dissimilarity - Clean Data}
+\label{tab:yuleCleanConfusion}
 \end{table}
 
 \begin{table}[!ht]
@@ -201,15 +201,15 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Predicted class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{6}{*}{Actual class}& 1 Anger & 4 & 1.1 & 2 & 0.4 & 0.8 & 0.5 \\ \cline{2-8}
-	& 2 Disgust & 0.4 & 16.7 & 1 & 0.3 & 0.2 & 0.1\\ \cline{2-8}
-	& 3 Fear & 0.8 & 1.6 & 12.9 & 1.1 & 0.3 & 2 \\ \cline{2-8}
-	& 4 Happiness & 0.4 & 0.8 & 1.1 & 17.7 & 0.2 & 0.6 \\ \cline{2-8}
-	& 5 Sadness & 2.9 & 0.8 & 1.3 & 0.3 & 5.2 & 0.5 \\ \cline{2-8}
-	& 6 Surprise & 0.3 & 0.2 & 1.2 & 0.6 & 0.7 & 19\\ \hline
+	\multirow{6}{*}{Actual class}& 1 Anger & 64 & 6 & 4 & 2 & 11 & 1 \\ \cline{2-8}
+	& 2 Disgust & 72 & 100 & 6 & 3 & 4 & 2\\ \cline{2-8}
+	& 3 Fear & 76 & 6 & 70 & 7 & 11 & 17 \\ \cline{2-8}
+	& 4 Happiness & 27 & 8 & 9 & 156 & 3 & 5 \\ \cline{2-8}
+	& 5 Sadness & 50 & 2 & 7 & 2 & 42 & 7 \\ \cline{2-8}
+	& 6 Surprise & 18 & 1 & 10 & 11 & 17 & 163\\ \hline
 \end{tabular}
-\caption{Average Confusion Matrix - RT - Noisy Data}
-\label{tab:rtNoisyConfusion}
+\caption{Confusion Matrix - Yule Dissimilarity - Noisy Data}
+\label{tab:yuleNoisyConfusion}
 \end{table}
 
 
@@ -220,14 +220,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 77.0992 & 91.4141 & 73.7288 & 97.2093 & 71.9697 & 95.6311 \\ \cline{2-8}  
-	& Shared AUs (Noisy) & 45.4545 & 89.3048 & 68.9840 & 85.0962 & 47.2727 & 86.3636 \\ \cline{2-8} 
-		& Weighted (Clean) & 77.8626 & 88.8889 & 83.0508 & 97.2093 & 70.4545 & 93.6893\\ \cline{2-8} 
-	& Weighted (Noisy) & 37.5000 & 78.6096 & 69.5187 & 85.5769 & 54.5455 & 85.4545\\ \cline{2-8}
-			& Matching (Clean) & 77.0992 & 91.4141 & 73.7288 & 97.2093 & 71.9696 & 95.6310\\ \cline{2-8} 
-	& Matching (Noisy) & 45.4545 & 89.3048 & 68.9840 & 85.0962 & 47.2727 & 86.3636\\ \cline{2-8}
-			& RT (Clean) & 77.0992 & 91.4141 & 73.7288 & 97.2093 & 71.9697 & 95.6311\\ \cline{2-8} 
-	& RT (Noisy) & 45.4545 & 89.3048 & 68.9840 & 85.0962 & 47.2727 & 86.3636\\ \hline
+	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 83.9695 & 81.3131 & 80.5085 & 94.8837 & 76.5152 & 91.7476 \\ \cline{2-8}  
+	& Shared AUs (Noisy) & 45.4545 & 79.1444 & 64.1711 & 78.3654 & 51.8182 & 79.5455 \\ \cline{2-8} 
+		& Weighted (Clean) & 78.6260 & 87.3737 & 80.5085 & 94.8837 & 75.7576 & 93.2039\\ \cline{2-8} 
+	& Weighted (Noisy) & 38.6364 & 73.7968 & 63.1016 & 77.8846 & 43.6364 & 82.7273\\ \cline{2-8}
+			& Dice (Clean) & 79.3893 & 76.7677 & 73.7288 & 91.6279 & 65.1515 & 88.8350\\ \cline{2-8} 
+	& Dice (Noisy) & 28.4091 & 80.2139 & 54.5455 & 69.2308 & 26.36363 & 76.3636\\ \cline{2-8}
+			& Yule (Clean) & 52.6718 & 86.8687 & 72.0339 & 87.9070 & 78.7879 & 85.9223\\ \cline{2-8} 
+	& Yule (Noisy) & 72.7273 & 53.4759 & 37.4332 & 75.0000 & 38.1818 & 74.0909\\ \hline
 
 \end{tabular}
 \caption{Precision Per Class}
@@ -241,14 +241,14 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 86.3248  & 78.3550 & 87.8788 & 92.0705 & 93.1373 & 87.9464 \\ \cline{2-8}  
-	& Shared AUs (Noisy) & 45.4545 & 78.7736 & 66.1538 & 86.7647 & 70.2703 & 83.7004 \\ \cline{2-8} 
-		& Weighted (Clean) & 82.9268 & 79.6380 & 87.5000 & 91.2663 & 86.1111 & 93.2367 \\ \cline{2-8} 
-	& Weighted (Noisy) & 41.7722 & 73.1343 & 65.0000 & 87.2549 & 64.5161 & 84.3049\\ \cline{2-8}
-			& Matching (Clean) & 86.3248 & 78.3550 & 87.8788 & 92.0705 & 93.1373 & 87.9464\\ \cline{2-8} 
-	& Matching (Noisy) & 45.4545 & 78.7736 & 66.1538 & 86.7647 & 70.2703 & 83.7004\\ \cline{2-8}
-			& RT (Clean) & 86.3248  & 78.3550 & 87.8788 & 92.0705 & 93.1373 & 87.9464\\ \cline{2-8} 
-	& RT (Noisy) & 45.4545 & 78.7736 & 66.1538 & 86.7647 & 70.2703 & 83.7004\\ \hline
+	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 78.0142  & 79.3103 & 85.5856 & 92.3077 & 84.1667  & 92.6471 \\ \cline{2-8}  
+	& Shared AUs (Noisy) & 33.3333 & 72.9064 & 63.4921 & 84.8958 & 65.5172 & 83.7321 \\ \cline{2-8} 
+		& Weighted (Clean) & 75.7553 & 79.7235 & 87.9630 & 94.0092 & 83.3333 & 95.0495 \\ \cline{2-8} 
+	& Weighted (Noisy) & 30.6306 & 66.0287 & 63.4409 & 85.2632 & 60.7595 & 80.8889 \\ \cline{2-8}
+			& Dice (Clean) & 66.2420 & 76.7677 & 73.1092 & 90.3670 & 84.3137 & 88.8350\\ \cline{2-8} 
+	& Dice (Noisy) & 25.5102 & 62.7615 & 52.3077 & 77.4194 & 59.1837 & 72.1030 \\ \cline{2-8}
+			& Yule (Clean) & 81.1765  & 73.5043 & 75.8929 & 95.4545 & 57.1429 & 93.6508\\ \cline{2-8} 
+	& Yule (Noisy) & 20.8469 & 81.3008 & 66.0377 & 86.1878 & 47.7273 & 83.5897\\ \hline
 
 \end{tabular}
 \caption{Recall Per Class}
@@ -262,37 +262,19 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 	\multicolumn{2}{c}{}& \multicolumn{6}{ |c| }{Class}\\
 	\cline{3-8}
 	\multicolumn{2}{c|}{} & 1 Anger & 2 Disgust & 3 Fear & 4 Happiness & 5 Sadness & 6 Surprise\\ \cline{1-8}
-	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 81.4516  & 84.3822 & 80.1843 & 94.5701 & 81.1965 & 91.6279 \\ \cline{2-8}  
-	& Shared AUs (Noisy) & 45.4545 & 83.7093 & 67.5393 & 85.922 & 56.5217 & 85.0112r\\ \cline{2-8} 
-		& Weighted (Clean) & 80.3149 & 84.0095 & 85.2174 & 94.1441 & 77.5000 & 93.4624\\ \cline{2-8} 
-	& Weighted (Noisy) & 39.5210 & 75.7732 & 67.1835 & 86.4078 & 59.1133 & 84.8758\\ \cline{2-8}
-			& Matching (Clean) & 81.4516  & 84.3823 & 80.1843 & 94.5701 & 811966 & 91.6279\\ \cline{2-8} 
-	& Matching (Noisy) & 45.4545 & 83.7093 & 67.5393 & 85.9223 & 56.5217 & 85.0112\\ \cline{2-8}
-			& RT (Clean) & 81.4516 & 84.3823 & 80.1843 & 94.5701 & 81.1966 & 91.6279\\ \cline{2-8} 
-	& RT (Noisy) & 45.4545 & 83.7093 & 67.5393 & 85.9223 & 56.5217 & 85.0112\\ \hline
+	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 80.8824  & 80.2993 & 82.9694 & 93.5701 & 80.1587 & 92.1951 \\ \cline{2-8}  
+	& Shared AUs (Noisy) & 38.4615 & 75.8974 & 63.8298 & 81.5000 & 57.8680 & 81.5851\\ \cline{2-8} 
+		& Weighted (Clean) & 77.1536 & 83.3735 & 84.0708 & 94.4444 & 79.3651 & 94.1176\\ \cline{2-8} 
+	& Weighted (Noisy) & 34.1709 & 69.6970 & 63.2708 & 81.4070 & 50.7937 & 81.7978\\ \cline{2-8}
+			& Dice (Clean) & 72.2222 & 76.7677 & 73.4177 & 90.9931 & 73.5043 & 88.8350 \\ \cline{2-8} 
+	& Dice (Noisy) & 45.4545 & 83.7093 & 67.5393 & 85.9223 & 56.5217 & 85.0112\\ \cline{2-8}
+			& Yule (Clean) & 63.8889 & 79.6296 & 739130 & 91.5254 & 66.2420 & 89.6203 \\ \cline{2-8} 
+	& Yule (Noisy) & 32.4051 & 64.5161 & 47.7816 & 80.2057 & 42.4242 & 78.5542\\ \hline
+	
 
 \end{tabular}
 \caption{F1 Measure Per Class}
 \label{tab:f1PerClass}
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\begin{tabular}{|l|c|c|c|}
-	\cline{3-3}
-	\multicolumn{2}{c|}{} & Average Classification Rate \\ \cline{1-3}
-	\multirow{2}{*}{Algorithm}& Shared AUs (Clean) & 0.87  \\ \cline{2-3}  
-	& Shared AUs (Noisy) & 0.7750  \\ \cline{2-3} 
-		& Weighted (Clean) &  0.871\\ \cline{2-3} 
-	& Weighted (Noisy) & 0.7360\\ \cline{2-3} 
-			& Matching (Clean) & 0.87  \\ \cline{2-3} 
-	& Matching (Noisy) & 0.7550\\ \cline{2-3} 
-			& RT (Clean) & 0.87 \\ \cline{2-3} 
-	& RT (Noisy) & 0.7550\\ \hline
-
-\end{tabular}
-\caption{Average Classification Rate}
-\label{tab:avgClassificationRate}
 \end{table}
 
 \bibliography{case_based_reasoning}
