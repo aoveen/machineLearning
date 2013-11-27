@@ -19,7 +19,7 @@
 
 \section{Case-based Reasoning}
 Contrary to the previous algorithms we have implemented (decision tree learning and artificial neural networks) which belong to the class of \emph{eager learning algorithms}, instance-based learning algorithms belong to the class  of so-called \emph{lazy learning methods}. 
-While \emph{eager learning algorithms} construct a general and explicit description of the target function when training examples are provided, \emph{lazy learning algorithms}, such as \emph{Case-based reasoning} simply store the training examples. Generalising beyond these examples is only done when a new instance must be classified. When a new instance should be classified, the algorithm compares the instance to the existing instances and assigns a target function value (the classification) based on the instance's relation to the already stored values.
+While \emph{eager learning algorithms} construct a general and explicit description of the target function when training examples are provided, \emph{lazy learning algorithms}, such as \emph{Case-based reasoning} simply store the training examples. Generalising beyond these examples is only done when a new instance must be classified. When a new instance should be classified, the algorithm compares the instance to the existing instances and assigns a target function value (the classification) based on the instance's relation to the already stored values. After classification of the new example, the \emph{CBR} system stores ("retains") the new example in order to use it for future classification. For this reason, the \emph{case-based} reasoning algorithm is also known as an \emph{online}-learning method as the algorithm continues to learn throughout its lifetime.
 
 \section{Implementation Details}
 Describe implemenation of CBR cases, the retrieve, reuse and retain functions. Flowchart of how the code works.
@@ -27,13 +27,15 @@ Describe implemenation of CBR cases, the retrieve, reuse and retain functions. F
 Describe how you initialise your CBR system.
 
 \subsection{Dealing with Existing Cases}
-Discuss what happens if you try to add a case to the CBR system that is already there (either in the initialisation phase or in the retain function) How did you deal with this issue?
+
+It is possible that during the initial training phase but also later on when retaining an example, the case-based reasoning algorithm is tasked with adding a case to the system that already exists. We decided to take a similar approach to handling this case as described in \cite{Pantic2004}. In this paper, the authors describe how examples with higher typicality than others are given a higher weight than others. What this means is that if the CBR is contains two distinct examples A and B with typicality a and b respectively and $a > b$, the system will classify a new example C the same as example A, given that both A and B are returned as a possible best match by the algorithm. 
+In order to implement this, we decided against using an explicit \emph{typicality} field in the \emph{Case} structure. Instead, we simply add the case multiple times, thus implicitly increasing the typicality of an example. 
+
+\subsection{Dealing with Multiple Best Matches}
+As described in the previous section, we add multiple instances of the same example if a case already exists. This way, we implicitly increase the typicality of that case. As outlined above, when retrieving the best match we want to give advantage to best matches that have a higher typicality since they are more likely to be correct classifications. The way we give this advantage is again implicit.We first calculate the best match in terms of the case's performance using the distance measure. Since multiple cases can have the same performance a set of possible best matches will be returned. Since we do not explicitly handle the case when a case already exists this set of possible best matches will thus contain a number of duplicate entries. We then proceed by taking a random element out of this set as our final answer, thus implicitly weighing cases with higher typicality higher than others.
 
 \subsection{Similarity Measures}
 Compare the different similarity measures you have used (at least three). What are the advantages/ disadvantages of each measure?
-
-\subsection{Dealing with Multiple Best Matches}
-How did you solve the problem of finding two or more best matches with different labels in function RETRIEVE
 
 \section{Performance Results}
 
@@ -292,5 +294,8 @@ Table~\ref{tab:avgClassificationRate} shows that there is a difference in perfor
 \caption{Average Classification Rate}
 \label{tab:avgClassificationRate}
 \end{table}
+
+\bibliography{case_based_reasoning}
+\bibliographystyle{plain}
 
 \end{document}
