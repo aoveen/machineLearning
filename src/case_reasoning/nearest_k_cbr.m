@@ -68,4 +68,8 @@ function [best_match] = nearest_k_retrieve(cbr, newcase)
     best_label = mode(lowest_idx);
     best_idx = find(lowest_idx==best_label);
     best_match = lowest_k(best_idx(1));
+    
+    retain_case = newcase;
+    retain_case.label = best_label;
+    cbr.retain(cbr, retain_case);
 end

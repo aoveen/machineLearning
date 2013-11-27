@@ -43,6 +43,29 @@ Commented results of the average confusion matrix, average classification rate a
 
 Table~\ref{tab:avgClassificationRate} shows that there is a difference in performance of CBR on noisy and clean data. This difference is a 10\% - 15\% reduction in average classification rate for noisy data compared to clean data. A reason for this can be that the the noisy data contains attributes that are not relevant to solving the problem (e.g. examples that have the same set of 'core' attributes that can be used to classify it but also have different sets of other attributes that). This means these examples will be spread out when they should actually be close together, and so when a new example needs classifying the examples it should use might be far away from it. The top performing measure, Shared AUs, does not take into account what AUs are important for classification so it may indicate that two examples are similar if they share the same irrelevant AUs.
 
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|l|l|c|c|}
+	\cline{3-4}
+	\multicolumn{2}{c}{}& \multicolumn{2}{ |c| }{Average Classification Error Rate}\\
+	\cline{3-4}
+	\multicolumn{2}{c|}{} & Clean & Noisy \\ \cline{1-4}
+	\multirow{10}{*}{Similarity Measure}& Dice Dissimilarity & 0.1910 & 0.3820   \\ \cline{2-4}
+	& Jaccard & 0.1910 & 0.3820  \\ \cline{2-4}
+	& Matching Dissimilarity & 0.1400 & 0.2970   \\ \cline{2-4}
+	& RR Dissimilarity & 0.2740  & 0.4070  \\ \cline{2-4}
+	& RT Dissimilarity & 0.1400  & 0.2970   \\ \cline{2-4}	
+	& Rubbish & 0.8070 & 0.8130  \\ \cline{2-4}
+	& Shared AUs & 0.1400 & 0.2970   \\ \cline{2-4}
+	& SS Dissimilarity & 0.1910 & 0.3820  \\ \cline{2-4}
+	& Weighted & 0.1330 & 0.3180   \\ \cline{2-4}
+	& Yule Dissimilarity & 0.2040 & 0.4050\\ \hline
+\end{tabular}
+\caption{Average Classification Error Rate}
+\label{tab:avgClassificationError}
+\end{table}
+
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|l|c|c|c|c|c|c|}
