@@ -1,0 +1,18 @@
+Dice Clean - k = 3 ,e = 0
+Dice Noisy - k = 3,e = 0
+Jaccard Clean - k  3, e = 0
+Jaccard Noisy - k = 3, e = 0
+Matching Clean- k = 3, e = 0
+Matching Noisy- k = 3, e = 0
+RR Clean - k = 3, e = 0.005
+RR Noisy - k = 4 , e = 0.015
+RT Clean - k = 3, e = 0
+RT Noisy - k = 3, e=  0 
+Rubbish Clean - k = 20, e = 0.665
+Rubbish Clean - k = 12, e = 0.68
+Shared Clean - k = 3, e = 0
+Shared Noisy - k = 3, e = 0
+SS Clean - k = 3, e = 0
+SS Noisy - k = 3, e =0
+Yule Clean - k = 3, e = 0.02 
+Yule Clean - k = 5, e = 0.13 
