@@ -67,6 +67,8 @@ Table~\ref{tab:avgClassificationRate} shows the average classification rate of t
 Looking at the performance of the classifier on the noisy data, we can see that the relative order of the distance measures' performances has remained largely the same. However, it is noticeable that all systems' performances have dropped significantly when operating on the new data. The best performance out of all systems is given by the system using the \emph{Shared AUs} distance measure with only $70.3\%$ classification rate. This drop of $15.7$ percentage points is significant and suggests that CBR systems do not operate well on noisy data.
 One possible explanation for this is that after being trained initially on the dataset and being provided with the actual labels of the examples, the CBR system continues to learn after the training phase. However, in the test phase the system is not provided with any actual user feedback, which means that the system simply retains its prediction and uses it to make future predictions. This practice is dangerous when the CBR system operates on noisy data. This is because some of the examples in the noisy dataset contain wrong values for AUs which influences how the CBR system computes the similarity of this example. The more misleading examples there are in the CBR system, the less accurate the system becomes. In our test we were unable to validate this as the cause for the significant drop. In fact, the system performs equally well when not retaining examples in the test set. This can be explained by our choice of a relatively small K ($K=3$) for the KNN algorithm and the relatively large number of cases used for training. With only 100 test examples, it is relatively unlikely that the noisy examples will be close enough (by some distance measure) to the other data such that it can significantly influence the classification.
 
+Below `RT' refers to Rogers and Tanimoto; `RR' to Russell and Rao; `SS' to Sokal and Sneath.
+
 \begin{table}[!ht]
 \centering
 \begin{tabular}{|l|l|c|c|}
@@ -74,7 +76,7 @@ One possible explanation for this is that after being trained initially on the d
 	\multicolumn{2}{c}{}& \multicolumn{2}{ |c| }{Average Classification Rate}\\
 	\cline{3-4}
 	\multicolumn{2}{c|}{} & Clean & Noisy \\ \cline{1-4}
-	\multirow{11}{*}{Similarity Measure}& Dice Dissimilarity & 0.809 & 0.618   \\ \cline{2-4}
+    \multirow{11}{*}{Similarity Measure}& Dice Dissimilarity & 0.809 & 0.618   \\ \cline{2-4}
 	& Jaccard & 0.809 & 0.618  \\ \cline{2-4}
 	& Matching Dissimilarity & 0.86 & 0.703   \\ \cline{2-4}
 	& RR Dissimilarity & 0.726  & 0.593  \\ \cline{2-4}
@@ -90,7 +92,7 @@ One possible explanation for this is that after being trained initially on the d
 \label{tab:avgClassificationRate}
 \end{table}
 
-One possible reason for the performance drop in the noisy data is that the the noisy data contains attributes that are not relevant to solving the problem (e.g. examples that have the same set of 'core' attributes that can be used to classify it but also have different sets of other attributes that). This means these examples will be spread out when they should actually be close together, and so when a new example needs classifying the examples it should use might be far away from it. The top performing measure, \emph{Shared AUs}, does not take into account what AUs are important for classification so it may indicate that two examples are similar if they share the same irrelevant AUs.
+One possible reason for the performance drop in the noisy data is that the noisy data contains attributes that are not relevant to solving the problem (e.g. examples that have the same set of 'core' attributes that can be used to classify it but also have different sets of other attributes that). This means these examples will be spread out when they should actually be close together, and so when a new example needs classifying the examples it should use might be far away from it. The top performing measure, \emph{Shared AUs}, does not take into account what AUs are important for classification so it may indicate that two examples are similar if they share the same irrelevant AUs.
 
 \begin{table}[!ht]
 \centering
