@@ -21,13 +21,15 @@
 Contrary to the previous algorithms we have implemented (decision tree learning and artificial neural networks) which belong to the class of \emph{eager learning algorithms}, instance-based learning algorithms belong to the class  of so-called \emph{lazy learning methods}.
 While \emph{eager learning algorithms} construct a general and explicit description of the target function when training examples are provided, \emph{lazy learning algorithms}, such as \emph{Case-based reasoning} simply store the training examples. Generalising beyond these examples is only done when a new instance must be classified. When a new instance should be classified, the algorithm compares the instance to the existing instances and assigns a target function value (the classification) based on the instance's relation to the already stored values. After classification of the new example, the \emph{CBR} system stores ("retains") the new example in order to use it for future classification. For this reason, the \emph{case-based} reasoning algorithm is also known as an \emph{online}-learning method as the algorithm continues to learn throughout its lifetime.
 
+Throughout the report `RT' refers to Rogers and Tanimoto; `RR' to Russell and Rao; `SS' to Sokal and Sneath.
+
 \section{Implementation Details}
 In order to make it simpler to test and try new measures and CBR implementations
-we used a plugable system for implementing `retain' and the other operations.
+we used a pluggable system for implementing `retain' and the other operations.
 Each operation calls an associated method handle on the CBR this allows us to change our whole implementation of CBR
 and only have to change a single line in {\tt CBRinit.m}.
-Similarly our CBR implementations take and remember a measure allowing us to easily change measures for testing.
-What follows is an account of the implmentation of our best CBR system, Nearest-k CBR.
+Similarly our CBR implementations take and a measure as an argument allowing us to easily change measures for testing.
+What follows is an account of the implementation of our best CBR system, Nearest-k CBR.
 
 \subsection{Case}
 Our Case representation is a struct with three fields, the AUs in a list format,
@@ -58,7 +60,27 @@ For this problem the implementation of Reuse is very simple, we simply take the 
 Compare the different similarity measures you have used (at least three). What are the advantages/ disadvantages of each measure?
 
 Table \ref{tab:avgClassificationRate} shows the average classification rates of each measure on both the clean and the noisy data. 
-Since we do not have enough space available to talk about the advantages and disadvantages of all measures that we tried we shall only discuss the three following similarity measures: \emph{shared AUs}, \emph{weighted shared AUs}, and something else.
+Since we do not have enough space available to talk about the advantages and disadvantages of all measures that we tried we shall only discuss three similarity measures in detail: \emph{rubbish}, \emph{shared AUs}, \emph{weighted shared AUs}, and treat the rest generally.
+
+The first of these is the number of AUs comparison (which we dubbed \emph{rubbish measure}). Since we do not really expect that the number AUs should strongly correlated with the number of expressed AUs we expect this to do badly and it indeed it does with a classification rate of only 18\%.
+This is slightly better than what we would expect if the measure simply picked numbers at random\footnote{I you picked an emotion at random you would expect to be right $1/6 = 16\%$ of the time.} but not significantly.
+
+The next measure we looked at was \emph{shared AUs} this measure counts how many AUs appear in both of the two cases, this measure is also known as \emph{Matching Dissimilarity} and is equivalent to \emph{Euclidean Distance} given we have only binary input. This measure did a lot better and looking at the frequency of each AU for each emotion (Figure~\ref{fig:au_counts}) we can see why. Each emotion seems to have a distinctive `finger print', a few AUs which almost every example of that class has\footnote{Tellingly the emotions that are most difficult to classify anger (1), fear (3) and sadness (5) are the ones which do not have a very consistent finger print.} so we expect that if a case has one these AUs it is probably is that emotion.
+
+The next measure we looked at, \emph{weighted measure}, was a refinement on this same idea.
+Clearly some AUs seem very important in classification while others do not seem to play a big role.
+To exploit this we associated each AU with a weight between $0$ and $1$, when two examples shared an AU we add this weight to the similarity score. 
+This allowed some AUs to be more important than others and resulted in a slight but not significant improvement. 
+It also came with a big disadvantage, we have to optimise the all weights ahead of time which requires a-priori knowledge of the data which goes against the spirit of online lazy learning.
+
+We then turned to the literature trying out several measures including \emph{Dice Dissimilarity}, \emph{Jaccard Dissimilarity}, \emph{Sokal Sneath Dissimilarity}, \emph{Jaccard Dissimilarity}, \emph{Rogers Tanimoto Dissimilarity} and \emph{Yule Dissimilarity} all if these involved claulations based on the number of AUs both had, did not have or differed on. 
+None of these did much better or worse than \emph{shared AUs} signalling that we had perhaps reached the limit of what could be achieved with off the shelf techniques with out actually considering our specific data.
+\begin{figure}[!t]
+	\centering
+`	\includegraphics[scale=0.5, angle=90]{images/au_count.png}
+	\caption{AU number vs. frequency for emotions 1 to 6 (top to bottom) \\for clean and dirty data (Left and Right)}
+	\label{fig:au_counts}
+\end{figure}
 
 \section{Performance Results}
 
@@ -66,8 +88,6 @@ Table~\ref{tab:avgClassificationRate} shows the average classification rate of t
 
 Looking at the performance of the classifier on the noisy data, we can see that the relative order of the distance measures' performances has remained largely the same. However, it is noticeable that all systems' performances have dropped significantly when operating on the new data. The best performance out of all systems is given by the system using the \emph{Shared AUs} distance measure with only $70.3\%$ classification rate. This drop of $15.7$ percentage points is significant and suggests that CBR systems do not operate well on noisy data.
 One possible explanation for this is that after being trained initially on the dataset and being provided with the actual labels of the examples, the CBR system continues to learn after the training phase. However, in the test phase the system is not provided with any actual user feedback, which means that the system simply retains its prediction and uses it to make future predictions. This practice is dangerous when the CBR system operates on noisy data. This is because some of the examples in the noisy dataset contain wrong values for AUs which influences how the CBR system computes the similarity of this example. The more misleading examples there are in the CBR system, the less accurate the system becomes. In our test we were unable to validate this as the cause for the significant drop. In fact, the system performs equally well when not retaining examples in the test set. This can be explained by our choice of a relatively small K ($K=3$) for the KNN algorithm and the relatively large number of cases used for training. With only 100 test examples, it is relatively unlikely that the noisy examples will be close enough (by some distance measure) to the other data such that it can significantly influence the classification.
-
-Below `RT' refers to Rogers and Tanimoto; `RR' to Russell and Rao; `SS' to Sokal and Sneath.
 
 \begin{table}[!ht]
 \centering
