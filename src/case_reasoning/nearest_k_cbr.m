@@ -18,7 +18,7 @@ function [the_cbr] = nearest_k_retain(cbr, solvedcase)
     if cbr.dynamic_optimise
        optimise_k(cbr) 
     end
-    the_cbr = 0;
+    the_cbr = cbr;
 end
 
 function optimise_k(cbr)
