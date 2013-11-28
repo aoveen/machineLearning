@@ -9,13 +9,13 @@ function [weights] = optimise_weights(x, y)
             weights(i) = w;
             m = @(a, b) weighted_measure(weights, a, b);
             errors(end+1) = cross_fold(x, y, m);
-            printf('TEST %s, %f, %f\n', mat2str(weights), w, errors(end));
-            fflush(stdout); % Octave only
+            display(sprintf('TEST %s, %f, %f\n', mat2str(weights), w, errors(end)));
+            %fflush(stdout); % Octave only
         end
         [~, idx] = min(errors);
         weights(i) = values(idx);
     end
-    printf('RESULT %s\n', mat2str(weights));
+    display(sprintf('RESULT %s\n', mat2str(weights)));
 end
 
 function [e] = cross_fold(x, y, m)
@@ -36,7 +36,7 @@ function [cbr] = init(x, y, m)
     for i=1:n
         cases(i) = Case(xs2aus(x(i, :)), y(i));
     end
-    cbr = nearest_k_cbr(cases, m, 10);
+    cbr = nearest_k_cbr(cases, m, 3, false);
 end
 
 function [cost] = weighted_measure(weights, a, b)
