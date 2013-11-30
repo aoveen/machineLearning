@@ -27,12 +27,13 @@ Throughout the report `RT' refers to Rogers and Tanimoto; `RR' to Russell and Ra
 In order to make it simpler to test and try new measures and CBR implementations
 we used a pluggable system for implementing `retain' and the other operations.
 Each operation calls an associated method handle on the CBR this allows us to change our whole implementation of CBR
-and only have to change a single line in {\tt CBRinit.m}.
-Similarly our CBR implementations take and a measure as an argument allowing us to easily change measures for testing.
-What follows is an account of the implementation of our best CBR system, Nearest-k CBR.
+and only have to change a single line in {\tt CBRinit.m} (Figure~\ref{fig:cbrinit}).
+Similarly our CBR implementations take a measure (Figure~\ref{fig:measure_function}) as an argument allowing us to easily change measures for testing.
+What follows is an account of the implementation of our best CBR system, Nearest-k CBR (Figure~\ref{fig:nearest_k_cbr}). More detail about how each functions is implemented can be found by looking at flow charts attached at the end of the report.
+
 
 \subsection{Case}
-Our Case representation is a struct with three fields, the AUs in a list format,
+Our Case representation (Figure~\ref{fig:Case}) is a struct with three fields, the AUs in a list format,
 the AUs in the bit vector\footnote{This was an optimisation to make calculating the similarity function faster.} and the solution (possibly null).
 We do not count typicality in a Case instead if we have many identical cases we will keep multiple cases in our CBR implementation.
 This costs some memory and makes our CBR system slightly slower\footnote{But not significantly, very few examples are identical to other examples.} but removes a great deal of complexity from the implementation of Retrieve.
